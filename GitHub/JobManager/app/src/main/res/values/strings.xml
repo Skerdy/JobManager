@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">JobManager</string>
+    <string name="addJob">Add new Job</string>
+    <string name="addManager">Add Manager</string>
+</resources>
