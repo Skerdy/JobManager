@@ -125,6 +125,7 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     private void initAdminHomeFragment() {
+        toolbar.setTitle("Home");
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         AdminHomeFragment homeFragment = new AdminHomeFragment();
        // fragmentTransaction.addToBackStack("AdminHome");
@@ -133,6 +134,7 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     private  void initJobsFragment(){
+        toolbar.setTitle("Jobs");
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         AdminJobsFragment adminJobsFragment = new AdminJobsFragment();
         // fragmentTransaction.addToBackStack("AdminHome");
@@ -141,6 +143,7 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     private  void initUsersFragment(){
+        toolbar.setTitle("Members");
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         AdminPersonsFragment adminPersonsFragment = new AdminPersonsFragment();
         // fragmentTransaction.addToBackStack("AdminHome");
