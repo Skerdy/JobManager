@@ -4,6 +4,7 @@ import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.Address;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.Job;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.LoginResponse;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.Member;
+import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.RegisterResponse;
 
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,11 @@ public interface RequestsAPI {
     @Headers({"Content-Type:application/json"})
     @GET("member/GetMemberByUserID/{userASPId}")
     Call<List<Member>> getMemberByUserId(@Path("userASPId") String AspId);
+
+    @Headers({"Content-Type:application/json"})
+    @FormUrlEncoded
+    @POST("account/register")
+    Call<RegisterResponse> register(@FieldMap Map<String, String> registerCredentials);
 
 
 

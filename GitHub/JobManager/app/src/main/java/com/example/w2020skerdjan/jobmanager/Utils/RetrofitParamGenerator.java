@@ -12,4 +12,13 @@ public class RetrofitParamGenerator {
         resultmap.put("grant_type", grant_type);
         return resultmap;
     }
+
+    public static Map<String,String> generateRegisterMap(String email, String password, String confirmPassword, String userRole){
+        Map<String,String>resultmap = new HashMap<>();
+        resultmap.put("Email", email);
+        resultmap.put("Password", password);
+        resultmap.put("ConfirmPassword", confirmPassword);
+        resultmap.put("userrole", userRole);
+        return resultmap;
+    }
 }

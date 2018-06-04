@@ -66,7 +66,7 @@ public class AdminPersonsFragment extends Fragment {
     private void setupAllViews(View view){
         recyclerView = view.findViewById(R.id.recyclerView);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2,GridLayoutManager.VERTICAL,false));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2, GridLayoutManager.VERTICAL,false));
         setupSwipeToRefresh();
     }
 

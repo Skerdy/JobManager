@@ -90,7 +90,6 @@ public class AdminHomeFragment extends Fragment {
         mChart.getDescription().setEnabled(false);
         mChart.setCenterText(ChartData.generateCenterText());
         mChart.setCenterTextSize(10f);
-        mChart.setEntryLabelColor(Color.BLACK);
 
 
         // radius of the center hole in percent of maximum radius
