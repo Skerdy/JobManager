@@ -1,4 +1,4 @@
-package com.example.w2020skerdjan.jobmanager.ManagerLogic;
+package com.example.w2020skerdjan.jobmanager.RoleUserLogic.ManagerLogic;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

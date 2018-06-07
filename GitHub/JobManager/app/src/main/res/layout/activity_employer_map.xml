@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:fab="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent" tools:context=".RoleUserLogic.EmployerLogic.EmployerMap">
+<android.support.design.widget.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:textAlignment="center"
+        app:titleTextColor="@color/accent"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        tools:targetApi="lollipop">
+    </Toolbar>
+</android.support.design.widget.AppBarLayout>
+
+<RelativeLayout
+    android:id="@+id/fragmentLogin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+</RelativeLayout>
+
+<com.github.clans.fab.FloatingActionMenu
+    android:id="@+id/fabmenu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="bottom|end"
+    android:elevation="4dp"
+    android:paddingBottom="16dp"
+    fab:menu_backgroundColor="#ccffffff"
+    fab:menu_colorNormal="@color/fab_menu_colorNormal"
+    fab:menu_colorPressed="@color/fab_menu_colorPressed"
+    fab:menu_colorRipple="@color/fab_menu_colorRipple"
+    fab:menu_labels_ellipsize="end"
+    fab:menu_labels_singleLine="true">
+
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/kalendar_javor"
+        style="@style/MenuButtonsSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fab:fab_label="@string/addJob"
+        android:src="@drawable/ic_icon_job_fab"
+        fab:fab_size="mini" />
+
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/kalendar_ditor"
+        style="@style/MenuButtonsSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_icon_manager_fab"
+        fab:fab_label="@string/addManager"
+        fab:fab_size="mini" />
+</com.github.clans.fab.FloatingActionMenu>
+
+    <include layout="@layout/employer_map_slide_up"
+        tools:visibility = "gone"/>
+</android.support.design.widget.CoordinatorLayout>

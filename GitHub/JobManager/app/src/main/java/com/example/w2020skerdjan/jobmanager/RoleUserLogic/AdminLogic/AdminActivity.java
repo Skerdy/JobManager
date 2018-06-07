@@ -1,6 +1,5 @@
-package com.example.w2020skerdjan.jobmanager.AdminLogic;
+package com.example.w2020skerdjan.jobmanager.RoleUserLogic.AdminLogic;
 
-import android.graphics.Color;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 
 
-import com.example.w2020skerdjan.jobmanager.Fragment.LoginFragment;
 import com.example.w2020skerdjan.jobmanager.R;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;

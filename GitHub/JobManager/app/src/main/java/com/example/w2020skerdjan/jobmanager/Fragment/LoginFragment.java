@@ -16,13 +16,11 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.w2020skerdjan.jobmanager.Activities.LoginActivity;
-import com.example.w2020skerdjan.jobmanager.AdminLogic.AdminActivity;
-import com.example.w2020skerdjan.jobmanager.ManagerLogic.ManagerActivity;
+import com.example.w2020skerdjan.jobmanager.RoleUserLogic.AdminLogic.AdminActivity;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.LoginResponse;
 import com.example.w2020skerdjan.jobmanager.R;
 import com.example.w2020skerdjan.jobmanager.Retrofit.Requests.RequestsAPI;
 import com.example.w2020skerdjan.jobmanager.Retrofit.RetrofitClient;
-import com.example.w2020skerdjan.jobmanager.UserLogic.UserActivity;
 import com.example.w2020skerdjan.jobmanager.Utils.CodesUtil;
 import com.example.w2020skerdjan.jobmanager.Utils.MySharedPref;
 import com.example.w2020skerdjan.jobmanager.Utils.RetrofitParamGenerator;
@@ -177,11 +175,7 @@ public class LoginFragment extends Fragment {
             if(response.isSuccessful()){
                 loginResponse = response.body();
                 mySharedPref.saveStringInSharedPref(CodesUtil.ACCESS_TOKEN, loginResponse.getAccessToken());
-                intent = new Intent(getActivity(), AdminActivity.class);
-                startActivity(intent);
-                progressDialog.dismiss();
-                getActivity().finish();
-
+                redirectTo(CodesUtil.EMPLOYER_CLASS);
             }
             else {
                   Toast.makeText(getActivity(), "Login failed", Toast.LENGTH_SHORT).show();
@@ -206,6 +200,10 @@ public class LoginFragment extends Fragment {
         }
     };
 
-
-
+    private void redirectTo(Class T){
+        intent = new Intent(getActivity(), T);
+        startActivity(intent);
+        progressDialog.dismiss();
+        getActivity().finish();
+    }
 }

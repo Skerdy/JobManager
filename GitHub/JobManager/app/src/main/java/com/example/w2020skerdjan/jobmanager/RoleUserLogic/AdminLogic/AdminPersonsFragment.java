@@ -1,11 +1,11 @@
-package com.example.w2020skerdjan.jobmanager.AdminLogic;
+package com.example.w2020skerdjan.jobmanager.RoleUserLogic.AdminLogic;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.w2020skerdjan.jobmanager.Adapters.AdminJobsAdapter;
-import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.Job;
+import com.example.w2020skerdjan.jobmanager.Adapters.AdminPersonsAdapter;
+import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.Member;
 import com.example.w2020skerdjan.jobmanager.R;
 import com.example.w2020skerdjan.jobmanager.Retrofit.Requests.RequestsAPI;
 import com.example.w2020skerdjan.jobmanager.Retrofit.RetrofitClient;
@@ -28,15 +28,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class AdminJobsFragment extends Fragment {
+public class AdminPersonsFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private AdminJobsAdapter adminJobsAdapter;
+    private AdminPersonsAdapter adminPersonsAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private Retrofit retrofit;
     private RetrofitClient retrofitClient;
     private RequestsAPI requestsAPI;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,40 +43,40 @@ public class AdminJobsFragment extends Fragment {
         retrofitClient = new RetrofitClient();
         retrofit = retrofitClient.krijoRetrofit();
         requestsAPI = retrofit.create(RequestsAPI.class);
+        adminPersonsAdapter = new AdminPersonsAdapter(getActivity(), new ArrayList<Member>());
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_admin_jobs, container, false);
+        return inflater.inflate(R.layout.fragment_admin_persons, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupAllViews(view);
-        adminJobsAdapter = new AdminJobsAdapter(getActivity(), new ArrayList<Job>());
-        recyclerView.setAdapter(adminJobsAdapter);
+        recyclerView.setAdapter(adminPersonsAdapter);
         makeRequest();
     }
 
     private void setupAllViews(View view){
         recyclerView = view.findViewById(R.id.recyclerView);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2, GridLayoutManager.VERTICAL,false));
         setupSwipeToRefresh();
     }
 
     private void makeRequest(){
         setRefreshingTrue();
-        requestsAPI.getAllJobs().enqueue(getAllJobsCallback);
+        requestsAPI.getAllMembers().enqueue(getAllMembersCallback);
     }
 
-    Callback<List<Job>> getAllJobsCallback = new Callback<List<Job>>() {
+    Callback<List<Member>> getAllMembersCallback = new Callback<List<Member>>() {
         @Override
-        public void onResponse(Call<List<Job>> call, Response<List<Job>> response) {
+        public void onResponse(Call<List<Member>> call, Response<List<Member>> response) {
             if(response.isSuccessful()){
-                adminJobsAdapter.setJobs(response.body());
+                adminPersonsAdapter.setMembers(response.body());
             }
             else{
                 try {
@@ -90,7 +89,7 @@ public class AdminJobsFragment extends Fragment {
         }
 
         @Override
-        public void onFailure(Call<List<Job>> call, Throwable t) {
+        public void onFailure(Call<List<Member>> call, Throwable t) {
             String message = "";
             Toast.makeText(getActivity(), "Login failed: Network Error!", Toast.LENGTH_SHORT).show();
             if(t!=null && t.getMessage()!=null){
@@ -100,6 +99,8 @@ public class AdminJobsFragment extends Fragment {
             swipeRefreshLayout.setRefreshing(false);
         }
     };
+
+
 
 
     public void setRefreshingTrue() {
