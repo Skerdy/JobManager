@@ -1,7 +1,9 @@
 package com.example.w2020skerdjan.jobmanager.Retrofit.Requests;
 
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.Address;
+import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.EmployeeMap;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.Job;
+import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.JobType;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.LoginResponse;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.Member;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.RegisterResponse;
@@ -17,6 +19,7 @@ import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface RequestsAPI {
 
@@ -53,6 +56,19 @@ public interface RequestsAPI {
     @Headers({"Content-Type:application/json"})
     @GET("jobs/all")
     Call<List<Job>> getAllJobs();
+
+    @Headers({"Content-Type:application/json"})
+    @GET("jobs/GetJobstypes")
+    Call<List<JobType>> getAllJobsTypes();
+
+    @Headers({"Content-Type:application/json"})
+    @GET("jobs/GetUsersForJob")
+    Call<List<EmployeeMap>> getUsersForJob(@Query("aspnetuserid") String AspId , @Query("jobid") String JobId);
+
+
+
+
+
 
   /*  @Headers({"Content-Type:application/json"})
     @POST("member/PostNewMember")

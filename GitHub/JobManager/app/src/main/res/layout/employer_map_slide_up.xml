@@ -11,9 +11,6 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_employer_map">
 
-
-
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -22,15 +19,58 @@
 
             <TextView
                 android:layout_alignParentTop="true"
-                android:text="  Slide it down"
+                android:text="Look For Employees !"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView"
                 android:layout_centerHorizontal="true"
                 android:gravity="center_vertical"
                 android:textColor="@color/md_black_1000"
-                android:drawableLeft="@drawable/ic_arrow_drop_down_black_24dp"
                 android:layout_marginTop="16dp" />
+
+            <RelativeLayout
+                android:id="@+id/job_picker"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/textView"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:layout_margin="5dp">
+
+                <ImageView
+                    android:id="@+id/leftArrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_icon_left_arrow"
+                    android:layout_alignParentLeft="true"/>
+
+                <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingLeft="80dp"
+                android:paddingRight="80dp"
+                    android:layout_centerHorizontal="true"/>
+
+                <ImageView
+                    android:id="@+id/rightArrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_icon_right_arrow"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/findEmployee"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Find"
+                android:layout_below="@+id/job_picker"
+                android:layout_centerHorizontal="true"/>
 
         </RelativeLayout>
 
