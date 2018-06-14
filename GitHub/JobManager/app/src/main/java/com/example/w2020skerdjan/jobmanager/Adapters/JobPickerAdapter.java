@@ -72,4 +72,6 @@ public class JobPickerAdapter extends RecyclerView.Adapter<JobPickerAdapter.Text
         this.dataList = dataList;
         notifyDataSetChanged();
     }
+
+
 }

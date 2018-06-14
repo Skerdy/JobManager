@@ -3,12 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_slide_up_view"
+    android:layout_gravity="bottom"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="200dp"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_employer_map">
 
         <RelativeLayout
@@ -24,35 +23,53 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/textView"
                 android:layout_centerHorizontal="true"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:textColor="@color/md_black_1000"
-                android:layout_marginTop="16dp" />
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"/>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/refreshButton"
+                style="@android:style/Widget.Holo.ImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:clickable="true"
+               >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_icons_refresh_map"
+                    android:layout_margin="3dp"/>
+            </android.support.v7.widget.CardView>
 
             <RelativeLayout
                 android:id="@+id/job_picker"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/textView"
                 android:layout_marginTop="10dp"
-                android:padding="10dp"
-                android:layout_margin="5dp">
+                android:padding="10dp">
 
                 <ImageView
                     android:id="@+id/leftArrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_icon_left_arrow"
+                    android:clickable="true"
                     android:layout_alignParentLeft="true"/>
 
                 <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:paddingLeft="80dp"
-                android:paddingRight="80dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:id="@+id/rv"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="50dp"
+                    android:layout_height="28dp"
+                    android:layout_centerHorizontal="true"
+                    android:clipToPadding="false"
+                    android:paddingLeft="80dp"
+                    android:paddingRight="80dp" />
 
                 <ImageView
                     android:id="@+id/rightArrow"

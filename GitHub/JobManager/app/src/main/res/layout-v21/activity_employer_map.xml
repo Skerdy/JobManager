@@ -69,6 +69,29 @@ android:layout_height="match_parent" tools:context=".RoleUserLogic.EmployerLogic
         fab:fab_size="mini" />
 </com.github.clans.fab.FloatingActionMenu>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:visibility="gone"
+        android:id="@+id/topHeaderPanel"
+        android:background="@color/md_white_1000"
+        android:layout_gravity="bottom">
+
+    <TextView
+        android:layout_alignParentTop="true"
+        android:text=" Look For Employees !"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:id="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:textColor="@color/md_black_1000"
+        android:layout_marginTop="16dp" />
+
+    </RelativeLayout>
+
     <include layout="@layout/employer_map_slide_up"
         />
 

@@ -3,9 +3,13 @@ package com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployerLogic;
 import android.os.Build;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -17,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.w2020skerdjan.jobmanager.Adapters.JobPickerAdapter;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.EmployeeMap;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.JobType;
@@ -46,14 +51,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import travel.ithaka.android.horizontalpickerlib.PickerLayoutManager;
 
-public class EmployerMap extends FragmentActivity implements OnMapReadyCallback {
+public class EmployerMap extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private Toolbar toolbar;
     private SupportMapFragment mapFragment;
     private View slideUpEmployer;
     private SlideUp slideUp;
-    private RelativeLayout rootView;
+    private RelativeLayout rootView, topHeader;
     private RecyclerView rv;
     private JobPickerAdapter jobPickerAdapter;
     private Button findEmployee;
@@ -62,6 +67,12 @@ public class EmployerMap extends FragmentActivity implements OnMapReadyCallback 
     private RequestsAPI requestsAPI;
     private ImageView leftArrow, rightArrow;
     private ArrayList<Marker> markers;
+    private PickerLayoutManager pickerLayoutManager;
+    private int selectedJobId;
+    private List<JobType> jobTypes;
+    private MaterialDialog dialog;
+    private CardView cardView;
+    private int positionOfRecycler = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,13 +82,39 @@ public class EmployerMap extends FragmentActivity implements OnMapReadyCallback 
         setupViews();
         setupRetrofit();
         markers = new ArrayList<>();
+        jobTypes = new ArrayList<>();
         requestsAPI.getAllJobsTypes().enqueue(jobTypesCallback);
         findEmployee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                requestsAPI.getUsersForJob("15026256-6c63-4bea-b816-d5abbb37a3c0", "4").enqueue(usersCallback);
+                requestsAPI.getUsersForJob("15026256-6c63-4bea-b816-d5abbb37a3c0", ""+selectedJobId).enqueue(usersCallback);
+
             }
         });
+
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+         dialog = new MaterialDialog.Builder(EmployerMap.this)
+                .title("Not Found")
+                .content("No Employees were found for that job. Please try again later, or try another job below !")
+                .positiveText("Ok")
+                .build();
+
+        setupArrowNavigationLogic();
+    }
+
+    private int  getSelectedJobId(String jobName) {
+        for(JobType jobType : jobTypes){
+            if(jobType.getJobTitle().equals(jobName)){
+               return (int) jobType.getJobId();
+            }
+        }
+        return -1;
     }
 
     Callback<List<EmployeeMap>> usersCallback = new Callback<List<EmployeeMap>>() {
@@ -85,10 +122,14 @@ public class EmployerMap extends FragmentActivity implements OnMapReadyCallback 
         public void onResponse(Call<List<EmployeeMap>> call, Response<List<EmployeeMap>> response) {
             if(response.isSuccessful()){
                     putMarkersFromCall(response.body());
+                    if(response.body().isEmpty()){
+                    dialog.show();
+                    }
             }
             else {
                 try {
-                    Log.d("Login", "Get All Job Types Failed : " + response.message() + response.errorBody().string());
+                    dialog.show();
+                    Log.d("Login", "Get All Employees Failed : " + response.message() + response.errorBody().string());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -98,7 +139,7 @@ public class EmployerMap extends FragmentActivity implements OnMapReadyCallback 
         @Override
         public void onFailure(Call<List<EmployeeMap>> call, Throwable t) {
             String message = "";
-            Toast.makeText(EmployerMap.this, "Login failed: Network Error!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), "Login failed: Network Error!", Toast.LENGTH_SHORT).show();
             if(t!=null && t.getMessage()!=null){
                 message = t.getMessage();
             }
@@ -111,14 +152,21 @@ public class EmployerMap extends FragmentActivity implements OnMapReadyCallback 
         @Override
         public void onResponse(Call<List<JobType>> call, Response<List<JobType>> response) {
             if(response.isSuccessful()){
+                jobTypes.clear();
+                jobTypes.addAll(response.body());
                 jobPickerAdapter.setDataList(Utils.getJobsTypesFromResponse(response.body()));
             }
             else {
                 try {
+
                     Log.d("Login", "Get All Job Types Failed : " + response.message() + response.errorBody().string());
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+
+               // showDialogWithMessage("Not Found", "No Employees were found for that job. Please try again later, or try another job below !");
             }
         }
 
@@ -179,6 +227,8 @@ public class EmployerMap extends FragmentActivity implements OnMapReadyCallback 
     }
 
     private void setupViews(){
+        cardView = findViewById(R.id.refreshButton);
+        topHeader = findViewById(R.id.topHeaderPanel);
         leftArrow = findViewById(R.id.leftArrow);
         rightArrow = findViewById(R.id.rightArrow);
         rootView = findViewById(R.id.fragmentLogin);
@@ -205,6 +255,7 @@ public class EmployerMap extends FragmentActivity implements OnMapReadyCallback 
                    @Override
                    public void onVisibilityChanged(int visibility) {
                        if (visibility == View.GONE){
+                           topHeader.setVisibility(View.VISIBLE);
                        }
                    }
                })
@@ -217,10 +268,18 @@ public class EmployerMap extends FragmentActivity implements OnMapReadyCallback 
                .build();
         slideUp.show();
 
+        topHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                topHeader.setVisibility(View.GONE);
+                slideUp.show();
+            }
+        });
+
         mapFragment.getMapAsync(this);
         rv = (RecyclerView) findViewById(R.id.rv);
         findEmployee = findViewById(R.id.findEmployee);
-        PickerLayoutManager pickerLayoutManager = new PickerLayoutManager(this, PickerLayoutManager.HORIZONTAL, false);
+        pickerLayoutManager = new PickerLayoutManager(this, PickerLayoutManager.HORIZONTAL, false);
         pickerLayoutManager.setChangeAlpha(true);
         pickerLayoutManager.setScaleDownBy(0.99f);
         pickerLayoutManager.setScaleDownDistance(0.8f);
@@ -235,10 +294,15 @@ public class EmployerMap extends FragmentActivity implements OnMapReadyCallback 
         pickerLayoutManager.setOnScrollStopListener(new PickerLayoutManager.onScrollStopListener() {
             @Override
             public void selectedView(View view) {
-                if(view instanceof TextView)
-                    Toast.makeText(EmployerMap.this, ("Selected value : "+((TextView) view).getText().toString()), Toast.LENGTH_SHORT).show();
+                    TextView textView = (TextView) view.findViewById(R.id.job_item);
+                    selectedJobId = getSelectedJobId(textView.getText().toString());
+                    reCalculateRecyclerViewPosition(textView.getText().toString());
             }
         });
+
+
+
+
     }
 
     @Override
@@ -256,6 +320,99 @@ public class EmployerMap extends FragmentActivity implements OnMapReadyCallback 
         retrofitClient = new RetrofitClient();
         retrofit = retrofitClient.krijoRetrofit();
         requestsAPI = retrofit.create(RequestsAPI.class);
+    }
+
+    private void showDialogWithMessage(String title , String message){
+       /* new MaterialDialog.Builder(EmployerMap.this)
+                .title(title)
+                .content(message)
+                .positiveText("OK")
+                .build()
+                .show();*/
+       Log.d("Login", "initializing dialog");
+
+        MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .title(title)
+                .content(message)
+                .positiveText("Ok")
+                .show();
+    }
+
+    private void setupArrowNavigationLogic(){
+        positionOfRecycler = 1;
+      //  final LinearSmoothScroller smoothScroller = new LinearSmoothScroller(EmployerMap.this);
+        final LinearSmoothScroller smoothScroller = new LinearSmoothScroller(rv.getContext()) {
+
+            @Override
+            protected float calculateSpeedPerPixel(DisplayMetrics displayMetrics) {
+                return 500 / displayMetrics.densityDpi;
+            }
+        };
+
+        smoothScroller.setTargetPosition(positionOfRecycler);
+        rv.getLayoutManager().startSmoothScroll(smoothScroller);
+        leftArrow.setVisibility(View.INVISIBLE);
+        leftArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("ArrowPressed" , "Pressed Left");
+                if(positionOfRecycler-1<=-1)
+                    positionOfRecycler=-1;
+                else
+                    positionOfRecycler--;
+               // rv.getLayoutManager().scrollToPosition(positionOfRecycler);
+
+                smoothScroller.setTargetPosition(positionOfRecycler);
+                rv.getLayoutManager().startSmoothScroll(smoothScroller);
+              //  rv.getLayoutManager().smoothScrollToPosition(rv,null,positionOfRecycler);
+                reCalculateVisibilityOfArrows(positionOfRecycler);
+            }
+        });
+
+        rightArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("ArrowPressed" , "Pressed Right");
+
+                if(positionOfRecycler+1>jobTypes.size())
+                    positionOfRecycler=jobTypes.size();
+                else{
+                    positionOfRecycler++;
+                }
+                smoothScroller.setTargetPosition(positionOfRecycler);
+                rv.getLayoutManager().startSmoothScroll(smoothScroller);
+              //  rv.getLayoutManager().smoothScrollToPosition(rv,null,positionOfRecycler);
+                reCalculateVisibilityOfArrows(positionOfRecycler);
+            }
+        });
+    }
+
+    private void reCalculateRecyclerViewPosition(String jobName){
+        for(int i =0 ; i<jobTypes.size(); i++){
+            if(jobTypes.get(i).getJobTitle().equals(jobName)){
+                this.positionOfRecycler = i;
+                reCalculateVisibilityOfArrows(i);
+                break;
+            }
+        }
+    }
+
+    //i eshte position aktual i sapollogaritur
+    private void reCalculateVisibilityOfArrows(int i){
+        if(i<=0){
+            leftArrow.setVisibility(View.INVISIBLE);
+        }
+        else {
+            leftArrow.setVisibility(View.VISIBLE);
+        }
+
+        if(i>=jobTypes.size()-1)
+        {
+            rightArrow.setVisibility(View.INVISIBLE);
+        }
+        else{
+            rightArrow.setVisibility(View.VISIBLE);
+        }
     }
 
 }
