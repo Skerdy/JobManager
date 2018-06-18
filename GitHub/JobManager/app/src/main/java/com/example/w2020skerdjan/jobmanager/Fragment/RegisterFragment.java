@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.w2020skerdjan.jobmanager.Activities.LoginActivity;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.LoginResponse;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.RegisterResponse;
+import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.RegisterResponseSuccess;
 import com.example.w2020skerdjan.jobmanager.R;
 import com.example.w2020skerdjan.jobmanager.Retrofit.Requests.RequestsAPI;
 import com.example.w2020skerdjan.jobmanager.Retrofit.RetrofitClient;
@@ -77,7 +78,7 @@ public class RegisterFragment extends Fragment {
         email = view.findViewById(R.id.input_email);
         password = view.findViewById(R.id.input_password);
         confirmPassword = view.findViewById(R.id.input_confirm_password);
-        List<String> dataset = new LinkedList<>(Arrays.asList("Employee", "Employeer", "Manager", "Admin"));
+        List<String> dataset = new LinkedList<>(Arrays.asList("Employee", "Employer", "Manager", "Admin"));
         niceSpinner.attachDataSource(dataset);
 
         progressDialog= new ProgressDialog(getActivity(),
@@ -132,15 +133,22 @@ public class RegisterFragment extends Fragment {
 
     private void register(){
         if(validate()){
-            requestsAPI.register(RetrofitParamGenerator.generateRegisterMap(email.getText().toString(),password.getText().toString(),confirmPassword.getText().toString(),niceSpinner.getText().toString())).enqueue(registerCallback);
+            Log.d("Register" , "Selected role " + niceSpinner.getText().toString().toLowerCase());
+            Log.d("Register" , "email " + email.getText().toString());
+            Log.d("Register" , "password " + password.getText().toString());
+            Log.d("Register" , "ConfirmPassword " + confirmPassword.getText().toString());
+            requestsAPI.register(RetrofitParamGenerator.generateRegisterMap(email.getText().toString().trim(),password.getText().toString().trim(),confirmPassword.getText().toString().trim(),niceSpinner.getText().toString().toLowerCase().trim())).enqueue(registerCallback);
+        }
+        else {
+            progressDialog.dismiss();
         }
 
     }
 
 
-    Callback<RegisterResponse> registerCallback  = new Callback<RegisterResponse>() {
+    Callback<RegisterResponseSuccess> registerCallback  = new Callback<RegisterResponseSuccess>() {
         @Override
-        public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+        public void onResponse(Call<RegisterResponseSuccess> call, Response<RegisterResponseSuccess> response) {
             if(response.isSuccessful()){
                 progressDialog.dismiss();
                 Log.d("Register" , "Register with success , code : " + response.code());
@@ -153,18 +161,19 @@ public class RegisterFragment extends Fragment {
                     progressDialog.dismiss();
                     try {
                         Log.d("Register" , "Register NO success , code : " + response.code() + " message" + response.message() + response.errorBody().string());
+                        Toast.makeText(getActivity(),"Register Failed. Passwords must have at least one non letter or digit character !", Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    if(response.body()!=null && response.body().getModelState()!=null && response.body().getModelState().getError()!=null && !response.body().getModelState().getError().isEmpty()){
+                /*    if(response.body()!=null && response.body().getModelState()!=null && response.body().getModelState().getError()!=null && !response.body().getModelState().getError().isEmpty()){
                     Toast.makeText(getActivity(),response.body().getModelState().getError().get(0), Toast.LENGTH_SHORT).show();
-                }
+                }*/
 
             }
         }
 
         @Override
-        public void onFailure(Call<RegisterResponse> call, Throwable t) {
+        public void onFailure(Call<RegisterResponseSuccess> call, Throwable t) {
             progressDialog.dismiss();
             Log.d("Register" , "Request failed : " + t.getMessage());
         }

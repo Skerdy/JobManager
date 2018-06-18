@@ -7,6 +7,7 @@ import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.JobType;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.LoginResponse;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.Member;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.RegisterResponse;
+import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.RegisterResponseSuccess;
 
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,6 @@ public interface RequestsAPI {
     @GET("member/all")
     Call<List<Member>> getAllMembers();
 
-
     @Headers({"Content-Type:application/json"})
     @GET("address/all")
     Call<List<Address>> getAllAddresses();
@@ -41,7 +41,6 @@ public interface RequestsAPI {
     @GET("member/GetMemberByUserType/{userTypeId}")
     Call<List<Member>> getMemberByUserType(@Path("userTypeId") Integer Id);
 
-
     @Headers({"Content-Type:application/json"})
     @GET("member/GetMemberByUserID/{userASPId}")
     Call<List<Member>> getMemberByUserId(@Path("userASPId") String AspId);
@@ -49,9 +48,7 @@ public interface RequestsAPI {
     @Headers({"Content-Type:application/json"})
     @FormUrlEncoded
     @POST("account/register")
-    Call<RegisterResponse> register(@FieldMap Map<String, String> registerCredentials);
-
-
+    Call<RegisterResponseSuccess> register(@FieldMap Map<String, String> registerCredentials);
 
     @Headers({"Content-Type:application/json"})
     @GET("jobs/all")
@@ -65,13 +62,8 @@ public interface RequestsAPI {
     @GET("jobs/GetUsersForJob")
     Call<List<EmployeeMap>> getUsersForJob(@Query("aspnetuserid") String AspId , @Query("jobid") String JobId);
 
+    @Headers({"Content-Type:application/json"})
+    @GET("roles/get")
+    Call<List<EmployeeMap>> getUsersForJob(@Query("userid") String AspId);
 
-
-
-
-
-  /*  @Headers({"Content-Type:application/json"})
-    @POST("member/PostNewMember")
-
-*/
 }

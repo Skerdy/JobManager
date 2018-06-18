@@ -6,7 +6,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.example.w2020skerdjan.jobmanager"
-        minSdkVersion 16
+        minSdkVersion 20
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -36,6 +36,7 @@ dependencies {
     implementation 'com.github.adityagohad:HorizontalPicker:1.0.1'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
+    implementation 'com.squareup.retrofit2:converter-jackson:2.3.0'
 
 
     implementation('com.mikepenz:materialdrawer:6.0.2@aar') {
