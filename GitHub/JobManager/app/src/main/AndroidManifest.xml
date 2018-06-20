@@ -31,16 +31,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RoleUserLogic.EmployerLogic.EmployerActivity"
-                  android:screenOrientation="portrait"
-                  android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".RoleUserLogic.EmployerLogic.EmployerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RoleUserLogic.AdminLogic.AdminActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-        <activity android:name=".RoleUserLogic.ManagerLogic.ManagerActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".RoleUserLogic.ManagerLogic.ManagerActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -56,8 +55,9 @@
         <activity
             android:name=".RoleUserLogic.EmployerLogic.EmployerMap"
             android:label="@string/title_activity_employer_map"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".RoleUserLogic.EmployerLogic.EmployerProfile"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

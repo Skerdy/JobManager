@@ -16,4 +16,7 @@
     <color name="fab_menu_colorPressed">@color/colorPrimaryDark</color>
     <color name="fab_menu_colorRipple">#B3E5FC</color>
     <color name="layout_background_underMonth">#fffde7</color>
+    <color name="graylight">#FAFAFA</color>
+    <color name="startGreen">#4CAF50</color>
+    <color name="endGreen">#388E3C</color>
 </resources>

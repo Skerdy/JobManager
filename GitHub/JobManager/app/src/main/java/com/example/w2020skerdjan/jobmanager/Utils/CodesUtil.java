@@ -12,4 +12,9 @@ public class CodesUtil {
     //public static final Class EMPLOYEE_CLASS = EmployeeActivity.class;
     public static final Class EMPLOYER_CLASS = EmployerActivity.class;
     public static final Class MANAGER_CLASS = ManagerActivity.class;
+    public static final String ADMINISTRATOR = "administrator" ;
+    public static final String EMPLOYER = " employer" ;
+    public static final String JOB_ID = "jobID";
+    public static final String INIT_MAP = "initMap" ;
+    public static final String FROM_JOB_CLICK = "from_job_click";
 }

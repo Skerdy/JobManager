@@ -283,6 +283,27 @@
                         android:text="1500$"/>
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="5dp"
+                    android:id="@+id/searchOnMap"
+                    android:visibility="gone"
+                    android:gravity="center_vertical|center_horizontal">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_icon_marker_google"
+                        android:gravity="center_vertical"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:text="Find Employees on Map"/>
+                </LinearLayout>
+
 
 
             </LinearLayout>

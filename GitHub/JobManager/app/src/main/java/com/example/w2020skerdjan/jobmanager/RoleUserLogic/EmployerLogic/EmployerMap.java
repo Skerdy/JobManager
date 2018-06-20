@@ -1,5 +1,6 @@
 package com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployerLogic;
 
+import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.JobType;
 import com.example.w2020skerdjan.jobmanager.R;
 import com.example.w2020skerdjan.jobmanager.Retrofit.Requests.RequestsAPI;
 import com.example.w2020skerdjan.jobmanager.Retrofit.RetrofitClient;
+import com.example.w2020skerdjan.jobmanager.Utils.CodesUtil;
 import com.example.w2020skerdjan.jobmanager.Utils.Utils;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -74,11 +76,15 @@ public class EmployerMap extends AppCompatActivity implements OnMapReadyCallback
     private CardView cardView;
     private int positionOfRecycler = 0;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employer_map);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        Intent intent = getIntent();
+
+
         setupViews();
         setupRetrofit();
         markers = new ArrayList<>();
@@ -88,6 +94,7 @@ public class EmployerMap extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view) {
                 requestsAPI.getUsersForJob("15026256-6c63-4bea-b816-d5abbb37a3c0", ""+selectedJobId).enqueue(usersCallback);
+                slideUp.hide();
 
             }
         });
@@ -106,6 +113,13 @@ public class EmployerMap extends AppCompatActivity implements OnMapReadyCallback
                 .build();
 
         setupArrowNavigationLogic();
+
+        if(intent.getStringExtra(CodesUtil.INIT_MAP)!=null && intent.getStringExtra(CodesUtil.INIT_MAP).equals(CodesUtil.FROM_JOB_CLICK)){
+            //kemi ardhur tek acitivity i map duke klikuar tek nje job nga lista e tere puneve prandaj bejme direkt thirrjen call dhe ulim panelin e search .
+            Log.d("EmployeeMap", "Erdhem nga JobClick");
+            slideUp.hide();
+            requestsAPI.getUsersForJob("15026256-6c63-4bea-b816-d5abbb37a3c0", ""+ intent.getIntExtra(CodesUtil.JOB_ID,1)).enqueue(usersCallback);
+        }
     }
 
     private int  getSelectedJobId(String jobName) {
@@ -121,6 +135,7 @@ public class EmployerMap extends AppCompatActivity implements OnMapReadyCallback
         @Override
         public void onResponse(Call<List<EmployeeMap>> call, Response<List<EmployeeMap>> response) {
             if(response.isSuccessful()){
+                    slideUp.hide();
                     putMarkersFromCall(response.body());
                     if(response.body().isEmpty()){
                     dialog.show();
@@ -294,9 +309,11 @@ public class EmployerMap extends AppCompatActivity implements OnMapReadyCallback
         pickerLayoutManager.setOnScrollStopListener(new PickerLayoutManager.onScrollStopListener() {
             @Override
             public void selectedView(View view) {
+                if(rv.getAdapter().getItemCount()>0) {
                     TextView textView = (TextView) view.findViewById(R.id.job_item);
                     selectedJobId = getSelectedJobId(textView.getText().toString());
                     reCalculateRecyclerViewPosition(textView.getText().toString());
+                }
             }
         });
 

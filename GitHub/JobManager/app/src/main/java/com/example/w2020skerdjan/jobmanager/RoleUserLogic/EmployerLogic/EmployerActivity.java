@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import com.example.w2020skerdjan.jobmanager.Fragment.LoginFragment;
 import com.example.w2020skerdjan.jobmanager.R;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -44,6 +45,7 @@ public class EmployerActivity extends AppCompatActivity {
         toolbar.setTitle("Home");
         setTitle("Home");
         setupNavigationDrawer();
+        initHomeFragment();
     }
 
     private void setupNavigationDrawer(){
@@ -51,6 +53,7 @@ public class EmployerActivity extends AppCompatActivity {
         PrimaryDrawerItem itemHome = new PrimaryDrawerItem().withIdentifier(0).withName("Home").withIcon(R.drawable.ic_icon_home_normal);
         PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName("My Jobs").withIcon(R.drawable.ic_icon_job);
         PrimaryDrawerItem item2 = new PrimaryDrawerItem().withIdentifier(3).withName("Find Employees").withIcon(R.drawable.ic_icon_users);
+        PrimaryDrawerItem item3 = new PrimaryDrawerItem().withIdentifier(4).withName("My Profile").withIcon(R.drawable.ic_icon_manager);
         SecondaryDrawerItem settings = new SecondaryDrawerItem().withIdentifier(5).withName("Settings").withIcon(R.drawable.ic_icon_settings_normal);
         //nis me Home Fragment ne OnCreate
         // Create the AccountHeader
@@ -77,7 +80,7 @@ public class EmployerActivity extends AppCompatActivity {
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .addDrawerItems(
-                        itemHome, item1,item2,
+                        itemHome, item1,item2,item3,
                         new DividerDrawerItem(),
                         settings
                 )
@@ -90,16 +93,16 @@ public class EmployerActivity extends AppCompatActivity {
                             public void run() {
                                 switch (position){
                                     case 1:
-                                     //   initAdminHomeFragment();
+                                     initHomeFragment();
                                         break;
                                     case 2:
-                                    //    initJobsFragment();
+                                        initSearchJobsEmployer();
                                         break;
                                     case 3:
                                         initfindEmployesActivity();
                                         break;
                                     case 4:
-                                    //    initUsersFragment();
+                                        initEmployerProfile();
                                         break;
                                     case 5 :
                                         break;
@@ -119,9 +122,34 @@ public class EmployerActivity extends AppCompatActivity {
         result.getStickyFooter().setBackgroundResource(R.color.nav_yellow);*/
     }
 
-    private void initfindEmployesActivity(){
+    public void initfindEmployesActivity(){
         Intent intent = new Intent(EmployerActivity.this, EmployerMap.class);
         startActivity(intent);
     }
 
+    public void initHomeFragment(){
+        fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        EmployerHomeFragment homeFragment = new EmployerHomeFragment();
+        fragmentTransaction.addToBackStack("employer_home");
+        fragmentTransaction.replace(R.id.fragmentLogin, homeFragment, "employer_home");
+        fragmentTransaction.commitAllowingStateLoss();
+    }
+
+    public void initEmployerProfile(){
+        /*fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        EmployerProfileFragment profileFragment = new EmployerProfileFragment();
+        fragmentTransaction.addToBackStack("employer_profile");
+        fragmentTransaction.replace(R.id.fragmentLogin, profileFragment, "employer_profile");
+        fragmentTransaction.commitAllowingStateLoss();*/
+        Intent intent = new Intent(EmployerActivity.this,EmployerProfile.class);
+        startActivity(intent);
+    }
+
+    public void initSearchJobsEmployer(){
+        fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        EmployeeSearchJobsFragment employeeSearchJobsFragment = new EmployeeSearchJobsFragment();
+        fragmentTransaction.addToBackStack("employeeSearchJobsFragment");
+        fragmentTransaction.replace(R.id.fragmentLogin, employeeSearchJobsFragment, "employeeSearchJobsFragment");
+        fragmentTransaction.commitAllowingStateLoss();
+    }
 }

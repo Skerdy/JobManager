@@ -37,6 +37,8 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
     implementation 'com.squareup.retrofit2:converter-jackson:2.3.0'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.+'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 
 
     implementation('com.mikepenz:materialdrawer:6.0.2@aar') {

@@ -1,10 +1,12 @@
 package com.example.w2020skerdjan.jobmanager.Models.HttpRequest;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class LoginResponse {
 
+    @JsonIgnoreProperties
     @SerializedName("access_token")
     @Expose
     private String accessToken;

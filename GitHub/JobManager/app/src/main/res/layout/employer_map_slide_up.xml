@@ -5,7 +5,7 @@
     android:id="@+id/content_slide_up_view"
     android:layout_gravity="bottom"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="250dp"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     tools:showIn="@layout/activity_employer_map">
@@ -50,7 +50,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/textView"
-                android:layout_marginTop="10dp"
+
+                android:layout_marginTop="30dp"
                 android:padding="10dp">
 
                 <ImageView

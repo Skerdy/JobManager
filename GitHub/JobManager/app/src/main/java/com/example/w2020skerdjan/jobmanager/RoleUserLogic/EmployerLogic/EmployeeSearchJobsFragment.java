@@ -1,4 +1,4 @@
-package com.example.w2020skerdjan.jobmanager.RoleUserLogic.AdminLogic;
+package com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployerLogic;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,7 +29,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class AdminJobsFragment extends Fragment {
+public class EmployeeSearchJobsFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private AdminJobsAdapter adminJobsAdapter;
@@ -57,7 +57,7 @@ public class AdminJobsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupAllViews(view);
-        adminJobsAdapter = new AdminJobsAdapter(getActivity(), new ArrayList<Job>(), CodesUtil.ADMINISTRATOR);
+        adminJobsAdapter = new AdminJobsAdapter(getActivity(), new ArrayList<Job>(), CodesUtil.EMPLOYER);
         recyclerView.setAdapter(adminJobsAdapter);
         makeRequest();
     }

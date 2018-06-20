@@ -1,15 +1,19 @@
 package com.example.w2020skerdjan.jobmanager.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.Job;
 import com.example.w2020skerdjan.jobmanager.R;
+import com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployerLogic.EmployerMap;
+import com.example.w2020skerdjan.jobmanager.Utils.CodesUtil;
 import com.github.florent37.expansionpanel.ExpansionLayout;
 import com.github.florent37.expansionpanel.viewgroup.ExpansionLayoutCollection;
 
@@ -20,11 +24,13 @@ public class AdminJobsAdapter extends RecyclerView.Adapter<AdminJobsAdapter.JobV
     private List<Job> jobs ;
     private Job job;
     private Context ctx;
+    private String role;
     private final ExpansionLayoutCollection expansionsCollection = new ExpansionLayoutCollection();
 
-    public AdminJobsAdapter(Context ctx, List<Job> jobs){
+    public AdminJobsAdapter(Context ctx, List<Job> jobs, String role){
         this.jobs = jobs;
         this.ctx = ctx;
+        this.role = role;
         expansionsCollection.openOnlyOne(true);
     }
 
@@ -57,6 +63,21 @@ public class AdminJobsAdapter extends RecyclerView.Adapter<AdminJobsAdapter.JobV
         holder.education.setText(job.getEducationRequired());
         holder.experience.setText(""+job.getExperienceRequiredYears());
         holder.salary.setText(job.getMinSalary());
+        if(role.equals(CodesUtil.ADMINISTRATOR)){
+            holder.searchOnMap.setVisibility(View.GONE);
+        }
+        else if(role.equals(CodesUtil.EMPLOYER)){
+            holder.searchOnMap.setVisibility(View.VISIBLE);
+            holder.searchOnMap.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent =new Intent(ctx, EmployerMap.class);
+                    intent.putExtra(CodesUtil.JOB_ID, job.getJobId());
+                    intent.putExtra(CodesUtil.INIT_MAP , CodesUtil.FROM_JOB_CLICK);
+                    ctx.startActivity(intent);
+                }
+            });
+        }
 
     }
 
@@ -79,7 +100,7 @@ public class AdminJobsAdapter extends RecyclerView.Adapter<AdminJobsAdapter.JobV
         private TextView salary;
         private TextView educationHeader;
         private TextView experienceHeader;
-
+        private LinearLayout searchOnMap;
         private ExpansionLayout expansionLayout;
 
 
@@ -95,6 +116,7 @@ public class AdminJobsAdapter extends RecyclerView.Adapter<AdminJobsAdapter.JobV
             expansionLayout = itemView.findViewById(R.id.expansionLayout);
             educationHeader = itemView.findViewById(R.id.EducationMark);
             experienceHeader = itemView.findViewById(R.id.experienceMark);
+            searchOnMap = itemView.findViewById(R.id.searchOnMap);
         }
 
         public ExpansionLayout getExpansionLayout() {
