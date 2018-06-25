@@ -39,7 +39,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="3"
+                android:background="#4D474E">
                 <LinearLayout
                     android:gravity="center"
                     android:orientation="vertical"
@@ -50,6 +51,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Jobs"
+                        android:textColor="@color/md_white_1000"
                         android:textSize="20sp"
                         />
                     <TextView
@@ -72,6 +74,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Employees"
+                        android:textColor="@color/md_white_1000"
                         android:textSize="20sp"
                         />
                     <TextView
@@ -94,6 +97,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Following"
+                        android:textColor="@color/md_white_1000"
                         android:textSize="20sp"
                         />
                     <TextView

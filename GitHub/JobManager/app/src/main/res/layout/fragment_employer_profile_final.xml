@@ -47,7 +47,8 @@
                     android:layout_width="400dp"
                     android:layout_height="150dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="180dp">
+                    android:layout_marginTop="180dp"
+                    app:cardBackgroundColor="#4D474E">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -56,6 +57,7 @@
                         <LinearLayout
                             android:gravity="center"
                             android:orientation="vertical"
+                            android:background="#4D474E"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="match_parent">
@@ -63,6 +65,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Jobs"
+                                android:textColor="@color/md_white_1000"
                                 android:textSize="20sp"
                                 />
                             <TextView
@@ -79,12 +82,14 @@
                             android:gravity="center"
                             android:orientation="vertical"
                             android:layout_width="0dp"
+                            android:background="#4D474E"
                             android:layout_weight="1"
                             android:layout_height="match_parent">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Employees"
+                                android:textColor="@color/md_white_1000"
                                 android:textSize="20sp"
                                 />
                             <TextView
@@ -101,12 +106,14 @@
                             android:gravity="center"
                             android:orientation="vertical"
                             android:layout_width="0dp"
+                            android:background="#4D474E"
                             android:layout_weight="1"
                             android:layout_height="match_parent">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Following"
+                                android:textColor="@color/md_white_1000"
                                 android:textSize="20sp"
                                 />
                             <TextView

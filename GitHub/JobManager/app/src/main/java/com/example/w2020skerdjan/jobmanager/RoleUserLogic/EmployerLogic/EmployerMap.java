@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
+import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,7 +21,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
+
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.w2020skerdjan.jobmanager.Adapters.JobPickerAdapter;
@@ -93,6 +94,7 @@ public class EmployerMap extends AppCompatActivity implements OnMapReadyCallback
         findEmployee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("EmployerMap", "" +selectedJobId);
                 requestsAPI.getUsersForJob("15026256-6c63-4bea-b816-d5abbb37a3c0", ""+selectedJobId).enqueue(usersCallback);
                 slideUp.hide();
 
@@ -102,6 +104,7 @@ public class EmployerMap extends AppCompatActivity implements OnMapReadyCallback
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                removeMarkers();
 
             }
         });
@@ -251,15 +254,12 @@ public class EmployerMap extends AppCompatActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         toolbar = findViewById(R.id.toolbar);
         slideUpEmployer = findViewById(R.id.slideUpEmployer);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setActionBar(toolbar);
+            setSupportActionBar(toolbar);
             toolbar.setTitleTextColor(getResources().getColor(R.color.md_white_1000));
             toolbar.setTitle("Employees");
-        }
 
-        setTitle("Home");
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
        slideUp = new SlideUpBuilder(slideUpEmployer)
                .withListeners(new SlideUp.Listener.Events() {
@@ -308,7 +308,8 @@ public class EmployerMap extends AppCompatActivity implements OnMapReadyCallback
 
         pickerLayoutManager.setOnScrollStopListener(new PickerLayoutManager.onScrollStopListener() {
             @Override
-            public void selectedView(View view) {
+            public void selectedView(View view, int position) {
+                Log.d("Skerdi", "position : " + position);
                 if(rv.getAdapter().getItemCount()>0) {
                     TextView textView = (TextView) view.findViewById(R.id.job_item);
                     selectedJobId = getSelectedJobId(textView.getText().toString());
@@ -324,13 +325,14 @@ public class EmployerMap extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d("EmployerMap", "Pressed back navigation button");
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
                 super.onBackPressed();
                 return true;
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     private void setupRetrofit(){
