@@ -63,10 +63,10 @@ public class AdminJobsAdapter extends RecyclerView.Adapter<AdminJobsAdapter.JobV
         holder.education.setText(job.getEducationRequired());
         holder.experience.setText(""+job.getExperienceRequiredYears());
         holder.salary.setText(job.getMinSalary());
-        if(role.equals(CodesUtil.ADMINISTRATOR)){
+        if(role.equals(CodesUtil.ADMINISTRATOR_ROLE)){
             holder.searchOnMap.setVisibility(View.GONE);
         }
-        else if(role.equals(CodesUtil.EMPLOYER)){
+        else if(role.equals(CodesUtil.EMPLOYER_ROLE)){
             holder.searchOnMap.setVisibility(View.VISIBLE);
             holder.searchOnMap.setOnClickListener(new View.OnClickListener() {
                 @Override

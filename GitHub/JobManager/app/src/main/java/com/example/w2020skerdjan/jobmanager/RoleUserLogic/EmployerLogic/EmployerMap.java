@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.w2020skerdjan.jobmanager.Adapters.DiscreteScrollViewAdapter;
 import com.example.w2020skerdjan.jobmanager.Adapters.JobPickerAdapter;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.EmployeeMap;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.JobType;
@@ -43,6 +44,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mancj.slideup.SlideUp;
 import com.mancj.slideup.SlideUpBuilder;
+import com.yarolegovich.discretescrollview.DiscreteScrollView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -115,7 +117,7 @@ public class EmployerMap extends AppCompatActivity implements OnMapReadyCallback
                 .positiveText("Ok")
                 .build();
 
-        setupArrowNavigationLogic();
+        //setupArrowNavigationLogic();
 
         if(intent.getStringExtra(CodesUtil.INIT_MAP)!=null && intent.getStringExtra(CodesUtil.INIT_MAP).equals(CodesUtil.FROM_JOB_CLICK)){
             //kemi ardhur tek acitivity i map duke klikuar tek nje job nga lista e tere puneve prandaj bejme direkt thirrjen call dhe ulim panelin e search .
@@ -258,10 +260,8 @@ public class EmployerMap extends AppCompatActivity implements OnMapReadyCallback
             toolbar.setTitleTextColor(getResources().getColor(R.color.md_white_1000));
             toolbar.setTitle("Employees");
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-       slideUp = new SlideUpBuilder(slideUpEmployer)
+        slideUp = new SlideUpBuilder(slideUpEmployer)
                .withListeners(new SlideUp.Listener.Events() {
                    @Override
                    public void onSlide(float percent) {
@@ -292,21 +292,21 @@ public class EmployerMap extends AppCompatActivity implements OnMapReadyCallback
         });
 
         mapFragment.getMapAsync(this);
-        rv = (RecyclerView) findViewById(R.id.rv);
+        //rv = (RecyclerView) findViewById(R.id.rv);
         findEmployee = findViewById(R.id.findEmployee);
-        pickerLayoutManager = new PickerLayoutManager(this, PickerLayoutManager.HORIZONTAL, false);
+      /*  pickerLayoutManager = new PickerLayoutManager(this, PickerLayoutManager.HORIZONTAL, false);
         pickerLayoutManager.setChangeAlpha(true);
         pickerLayoutManager.setScaleDownBy(0.99f);
-        pickerLayoutManager.setScaleDownDistance(0.8f);
+        pickerLayoutManager.setScaleDownDistance(0.8f);*/
 
         jobPickerAdapter = new JobPickerAdapter(this, new ArrayList<String>(), rv);
-        SnapHelper snapHelper = new LinearSnapHelper();
+       /* SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(rv);
         rv.setLayoutManager(pickerLayoutManager);
         rv.setAdapter(jobPickerAdapter);
-        rv.smoothScrollToPosition(1);
+        rv.smoothScrollToPosition(1);*/
 
-        pickerLayoutManager.setOnScrollStopListener(new PickerLayoutManager.onScrollStopListener() {
+       /* pickerLayoutManager.setOnScrollStopListener(new PickerLayoutManager.onScrollStopListener() {
             @Override
             public void selectedView(View view, int position) {
                 Log.d("Skerdi", "position : " + position);
@@ -316,11 +316,10 @@ public class EmployerMap extends AppCompatActivity implements OnMapReadyCallback
                     reCalculateRecyclerViewPosition(textView.getText().toString());
                 }
             }
-        });
+        });*/
 
-
-
-
+        DiscreteScrollView scrollView = findViewById(R.id.picker);
+        scrollView.setAdapter(new DiscreteScrollViewAdapter());
     }
 
     @Override
@@ -391,6 +390,7 @@ public class EmployerMap extends AppCompatActivity implements OnMapReadyCallback
         rightArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Log.d("ArrowPressed" , "Pressed Right");
 
                 if(positionOfRecycler+1>jobTypes.size())

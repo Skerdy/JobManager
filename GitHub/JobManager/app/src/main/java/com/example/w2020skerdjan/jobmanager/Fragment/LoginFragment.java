@@ -16,8 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.w2020skerdjan.jobmanager.Activities.LoginActivity;
-import com.example.w2020skerdjan.jobmanager.RoleUserLogic.AdminLogic.AdminActivity;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.LoginResponse;
+import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.Member;
 import com.example.w2020skerdjan.jobmanager.R;
 import com.example.w2020skerdjan.jobmanager.Retrofit.Requests.RequestsAPI;
 import com.example.w2020skerdjan.jobmanager.Retrofit.RetrofitClient;
@@ -25,7 +25,13 @@ import com.example.w2020skerdjan.jobmanager.Utils.CodesUtil;
 import com.example.w2020skerdjan.jobmanager.Utils.MySharedPref;
 import com.example.w2020skerdjan.jobmanager.Utils.RetrofitParamGenerator;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,6 +51,7 @@ public class LoginFragment extends Fragment {
     private MySharedPref mySharedPref;
     private String emailStr = null , passwordStr = null;
     private ProgressDialog progressDialog;
+    private String ASPNETUSERID = null;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +60,8 @@ public class LoginFragment extends Fragment {
         retrofit = retrofitClient.krijoRetrofit();
         requestsAPI = retrofit.create(RequestsAPI.class);
         mySharedPref = new MySharedPref(getActivity());
+
+
 
     }
 
@@ -83,7 +92,6 @@ public class LoginFragment extends Fragment {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 progressDialog.show();
                 Log.d("Login", " email : " + emailStr);
                 Log.d("Login", "password: " + passwordStr);
@@ -137,31 +145,6 @@ public class LoginFragment extends Fragment {
         return valid;
     }
 
-/*    private void login(){
-     if(validate()){
-         if(emailET.getText().toString().trim().equals("admin@w2020.com")){
-             intent = new Intent(getActivity(), AdminActivity.class);
-             startActivity(intent);
-             getActivity().finish();
-         }
-         else if(emailET.getText().toString().trim().equals("manager@w2020.com")){
-             intent = new Intent(getActivity(), ManagerActivity.class);
-             startActivity(intent);
-             getActivity().finish();
-         }
-
-         else {
-             intent = new Intent(getActivity(), UserActivity.class);
-             startActivity(intent);
-             getActivity().finish();
-         }
-     }
-     else {
-         Toast.makeText(getActivity(),"Login failed !", Toast.LENGTH_LONG).show();
-     }
-    }*/
-
-
     private void loginApiCall(){
         if(validate())
         requestsAPI.login(RetrofitParamGenerator.generateLoginMap(emailET.getText().toString().trim(), passwordET.getText().toString(), "password")).enqueue(loginCallback);
@@ -175,7 +158,7 @@ public class LoginFragment extends Fragment {
             if(response.isSuccessful()){
                 loginResponse = response.body();
                 mySharedPref.saveStringInSharedPref(CodesUtil.ACCESS_TOKEN, loginResponse.getAccessToken());
-                redirectTo(CodesUtil.EMPLOYER_CLASS);
+                requestsAPI.getAspNetUserIdByEmail(response.body().getUserName()).enqueue(getASPuserNetIdCallBack);
             }
             else {
                   Toast.makeText(getActivity(), "Login failed", Toast.LENGTH_SHORT).show();
@@ -200,10 +183,130 @@ public class LoginFragment extends Fragment {
         }
     };
 
+    Callback<Member> getASPuserNetIdCallBack = new Callback<Member>() {
+        @Override
+        public void onResponse(Call<Member> call, Response<Member> response) {
+            if(response.isSuccessful()){
+                ASPNETUSERID = response.body().getAspNetUserID();
+                Thread thread = new Thread(new Runnable(){
+
+                    @Override
+                    public void run() {
+                        try {
+                            requestRole();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+                    thread.start();
+            }
+            else {
+                progressDialog.dismiss();
+                try {
+                    Log.d("Login", "getAspnNetuserId failed : " + response.message() + response.errorBody().string());
+                    Toast.makeText(getActivity(), "There was a problem with extracting your role. Please contact the admins!", Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        @Override
+        public void onFailure(Call<Member> call, Throwable t) {
+            progressDialog.dismiss();
+            String message = "";
+            Toast.makeText(getActivity(), "Login failed: Network Error!", Toast.LENGTH_SHORT).show();
+            if(t!=null && t.getMessage()!=null){
+                message = t.getMessage();
+            }
+            Log.d("Login", "OnFailure : " + message);
+        }
+    };
+
     private void redirectTo(Class T){
         intent = new Intent(getActivity(), T);
         startActivity(intent);
-        progressDialog.dismiss();
         getActivity().finish();
+    }
+
+    private void requestRole () throws IOException {
+        StringBuilder urlString = new StringBuilder();
+        urlString.append("http://www.oncallemployee.com/client/api/roles/get?aspnetuserid=").append(ASPNETUSERID);
+        URL url = null;
+        try {
+            url = new URL(urlString.toString());
+            Log.d("Skerdi", "u krijuar Url");
+        } catch (MalformedURLException e) {
+            Log.d("Skerdi", "Error Malformes url");
+            e.printStackTrace();
+        }
+
+        HttpURLConnection con = null;
+
+        try {
+            con = (HttpURLConnection) url.openConnection();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setRequestMethod("GET");
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        }
+
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String inputLine;
+        StringBuffer content = new StringBuffer();
+        if (in != null) {
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
+            }
+        }
+        try {
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.d("Skerdi", "response = " + content.toString().trim() );
+        Log.d("Skerdi", "response = " + content.toString().trim() + " length = " + content.toString().length() );
+        Log.d("Skerdi", "length of role stored = " + CodesUtil.EMPLOYEE_ROLE.length() );
+
+
+        switch (content.toString().replace("\"","")){
+            case CodesUtil.ADMINISTRATOR_ROLE:
+                progressDialog.dismiss();
+                redirectTo(CodesUtil.ADMIN_CLASS);
+                break;
+            case CodesUtil.MANAGER_ROLE:
+                progressDialog.dismiss();
+                redirectTo(CodesUtil.MANAGER_CLASS);
+                break;
+            case CodesUtil.EMPLOYER_ROLE:
+                progressDialog.dismiss();
+                redirectTo(CodesUtil.EMPLOYER_CLASS);
+                break;
+            case CodesUtil.EMPLOYEE_ROLE:
+                progressDialog.dismiss();
+                redirectTo(CodesUtil.EMPLOYEE_CLASS);
+                break;
+            default:
+                progressDialog.dismiss();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getActivity(),"There was a problem with extracting your role. Please contact the admins!", Toast.LENGTH_LONG).show();
+                    }
+                });
+        }
     }
 }

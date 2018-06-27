@@ -56,6 +56,7 @@ public class AdminPersonsAdapter extends RecyclerView.Adapter<AdminPersonsAdapte
         name.append(member.getFirstName()).append(" ").append(member.getLastName());
         holder.userName.setText(name.toString());
         holder.notes.setText(member.getNotes());
+        if(member.getBirthDate()!=null)
         holder.birthday.setText(member.getBirthDate().substring(0,10));
         holder.mobile.setText(member.getPhone());
         holder.expansionLayout.addListener(new ExpansionLayout.Listener() {

@@ -57,7 +57,7 @@ public class AdminJobsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupAllViews(view);
-        adminJobsAdapter = new AdminJobsAdapter(getActivity(), new ArrayList<Job>(), CodesUtil.ADMINISTRATOR);
+        adminJobsAdapter = new AdminJobsAdapter(getActivity(), new ArrayList<Job>(), CodesUtil.ADMINISTRATOR_ROLE);
         recyclerView.setAdapter(adminJobsAdapter);
         makeRequest();
     }

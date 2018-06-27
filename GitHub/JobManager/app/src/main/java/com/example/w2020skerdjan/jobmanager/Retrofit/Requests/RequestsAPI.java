@@ -6,7 +6,6 @@ import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.Job;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.JobType;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.LoginResponse;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.Member;
-import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.RegisterResponse;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.RegisterResponseSuccess;
 
 import java.util.List;
@@ -16,7 +15,6 @@ import retrofit2.Call;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -43,7 +41,7 @@ public interface RequestsAPI {
 
     @Headers({"Content-Type:application/json"})
     @GET("member/GetMemberByUserID/{userASPId}")
-    Call<List<Member>> getMemberByUserId(@Path("userASPId") String AspId);
+    Call<List<EmployeeMap>> getMemberByUserId(@Path("userASPId") String AspId);
 
     @Headers({"Content-Type:application/json"})
     @FormUrlEncoded
@@ -65,5 +63,15 @@ public interface RequestsAPI {
     @Headers({"Content-Type:application/json"})
     @GET("roles/get")
     Call<List<EmployeeMap>> getUsersForJob(@Query("userid") String AspId);
+
+    @Headers({"Content-Type:application/json"})
+    @GET("member/GetAspnetUserIDByEmail")
+    Call<Member> getAspNetUserIdByEmail(@Query("email") String email);
+
+    @Headers({"Content-Type:application/json"})
+    @FormUrlEncoded
+    @GET("roles/get")
+    Call<Member> getUserRoleByAspNetUserId(@Query("aspnetuserid") String aspNetUserId);
+
 
 }

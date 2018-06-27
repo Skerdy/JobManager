@@ -38,6 +38,19 @@ public class Member {
     @Expose
     private Object imageMimeType;
 
+    @SerializedName("professionId")
+    @Expose
+    private Integer professionId;
+    @SerializedName("education")
+    @Expose
+    private Integer education;
+    @SerializedName("experienceYears")
+    @Expose
+    private Integer experienceYears;
+    @SerializedName("email")
+    @Expose
+    private String email;
+
     public Integer getMemberID() {
         return memberID;
     }
@@ -126,4 +139,35 @@ public class Member {
         this.imageMimeType = imageMimeType;
     }
 
+    public Integer getProfessionId() {
+        return professionId;
+    }
+
+    public void setProfessionId(Integer professionId) {
+        this.professionId = professionId;
+    }
+
+    public Integer getEducation() {
+        return education;
+    }
+
+    public void setEducation(Integer education) {
+        this.education = education;
+    }
+
+    public Integer getExperienceYears() {
+        return experienceYears;
+    }
+
+    public void setExperienceYears(Integer experienceYears) {
+        this.experienceYears = experienceYears;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
