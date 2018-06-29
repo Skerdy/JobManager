@@ -25,15 +25,32 @@ import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.RegisterResponseS
 import com.example.w2020skerdjan.jobmanager.R;
 import com.example.w2020skerdjan.jobmanager.Retrofit.Requests.RequestsAPI;
 import com.example.w2020skerdjan.jobmanager.Retrofit.RetrofitClient;
+import com.example.w2020skerdjan.jobmanager.Utils.CodesUtil;
+import com.example.w2020skerdjan.jobmanager.Utils.MySharedPref;
 import com.example.w2020skerdjan.jobmanager.Utils.RetrofitParamGenerator;
+import com.example.w2020skerdjan.jobmanager.Utils.Utils;
 
 import org.angmarch.views.NiceSpinner;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import in.goodiebag.carouselpicker.CarouselPicker;
 import retrofit2.Call;
@@ -53,6 +70,7 @@ public class RegisterFragment extends Fragment {
     private NiceSpinner niceSpinner;
     private boolean passwordsMatch = false;
     private ProgressDialog progressDialog;
+    private MySharedPref mySharedPref;
 
 
     @Override
@@ -61,6 +79,8 @@ public class RegisterFragment extends Fragment {
         retrofitClient = new RetrofitClient();
         retrofit  =retrofitClient.krijoRetrofit();
         requestsAPI = retrofit.create(RequestsAPI.class);
+        mySharedPref = new MySharedPref(getActivity());
+
     }
 
     @Nullable
@@ -90,7 +110,18 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 progressDialog.show();
-                register();
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            registerHttpRequestNoRetrofit();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            thread.start();
+
             }
         });
 
@@ -159,6 +190,7 @@ public class RegisterFragment extends Fragment {
             else
                 {
                     progressDialog.dismiss();
+
                     try {
                         Log.d("Register" , "Register NO success , code : " + response.code() + " message" + response.message() + response.errorBody().string());
                         Toast.makeText(getActivity(),"Register Failed. Passwords must have at least one non letter or digit character !", Toast.LENGTH_SHORT).show();
@@ -219,6 +251,137 @@ public class RegisterFragment extends Fragment {
         else{
             return false;
         }
+    }
+
+
+    private void registerHttpRequestNoRetrofit() throws IOException {
+        URL url = null;
+        try {
+            url = new URL("http://www.oncallemployee.com/client/api/account/register");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection conn = null;
+        try {
+            conn = (HttpURLConnection) url.openConnection();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        conn.setReadTimeout(20000);
+        conn.setConnectTimeout(20000);
+        try {
+            conn.setRequestMethod("POST");
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        }
+        conn.setDoInput(true);
+        conn.setDoOutput(true);
+        OutputStream os = null;
+        try {
+            os = conn.getOutputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(
+                    new OutputStreamWriter(os, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        try {
+            writer.write(getQuery(RetrofitParamGenerator.generateRegisterMap(email.getText().toString().trim(),password.getText().toString().trim(),confirmPassword.getText().toString().trim(),niceSpinner.getText().toString().toLowerCase().trim())));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            conn.connect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            progressDialog.dismiss();
+            if(in!=null)
+            in.close();
+        }
+
+
+
+
+        String inputLine;
+        StringBuffer content = new StringBuffer();
+        if (in != null) {
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
+            }
+        }
+
+        if(conn.getResponseCode()==200){
+             progressDialog.dismiss();
+             Toast.makeText(getActivity(),"Register successful!", Toast.LENGTH_SHORT).show();
+             mySharedPref.saveStringInSharedPref(CodesUtil.USERNAME, email.getText().toString().trim() );
+             mySharedPref.saveStringInSharedPref(CodesUtil.PASSWORD,password.getText().toString().trim() );
+             ((LoginActivity)getActivity()).initLogin();
+        }
+        else {
+            progressDialog.dismiss();
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getActivity(),"Register failed with error! Please make sure you enter valid data", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+
+
+        Log.d("Skerdi", "Register Response  = " + content.toString().trim() );
+        Log.d("Skerdi", "Register Response  = " + content.toString().trim() + " length = " + content.toString().length() );
+
+
+    }
+
+    private String getQuery(Map<String,String> params) throws UnsupportedEncodingException
+    {
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+
+        for (String key : params.keySet()) {
+            if (first)
+                first = false;
+            else
+                result.append("&");
+            result.append(URLEncoder.encode(key, "UTF-8"));
+            result.append("=");
+            result.append(URLEncoder.encode(params.get(key), "UTF-8"));
+        }
+        return result.toString();
     }
 
 

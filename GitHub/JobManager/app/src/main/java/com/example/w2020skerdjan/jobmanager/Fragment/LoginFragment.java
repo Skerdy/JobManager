@@ -248,12 +248,15 @@ public class LoginFragment extends Fragment {
         try {
             con = (HttpURLConnection) url.openConnection();
 
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         try {
             con.setRequestProperty("Content-Type", "application/json");
             con.setRequestMethod("GET");
+
         } catch (ProtocolException e) {
             e.printStackTrace();
         }
