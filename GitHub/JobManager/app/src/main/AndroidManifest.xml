@@ -58,6 +58,7 @@
             android:label="@string/title_activity_employer_map"
             android:theme="@style/AppTheme.NoActionBar" >
 
+
         </activity>
         <activity
             android:name=".RoleUserLogic.EmployerLogic.EmployerProfile"

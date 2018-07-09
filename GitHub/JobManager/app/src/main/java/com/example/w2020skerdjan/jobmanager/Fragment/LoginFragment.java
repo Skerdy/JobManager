@@ -187,6 +187,7 @@ public class LoginFragment extends Fragment {
         @Override
         public void onResponse(Call<Member> call, Response<Member> response) {
             if(response.isSuccessful()){
+                progressDialog.dismiss();
                 ASPNETUSERID = response.body().getAspNetUserID();
                 Thread thread = new Thread(new Runnable(){
 
@@ -276,6 +277,7 @@ public class LoginFragment extends Fragment {
             }
         }
         try {
+            if(in!=null)
             in.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -284,32 +286,28 @@ public class LoginFragment extends Fragment {
         Log.d("Skerdi", "response = " + content.toString().trim() + " length = " + content.toString().length() );
         Log.d("Skerdi", "length of role stored = " + CodesUtil.EMPLOYEE_ROLE.length() );
 
-
         switch (content.toString().replace("\"","")){
             case CodesUtil.ADMINISTRATOR_ROLE:
-                progressDialog.dismiss();
                 redirectTo(CodesUtil.ADMIN_CLASS);
                 break;
             case CodesUtil.MANAGER_ROLE:
-                progressDialog.dismiss();
                 redirectTo(CodesUtil.MANAGER_CLASS);
                 break;
             case CodesUtil.EMPLOYER_ROLE:
-                progressDialog.dismiss();
                 redirectTo(CodesUtil.EMPLOYER_CLASS);
                 break;
             case CodesUtil.EMPLOYEE_ROLE:
-                progressDialog.dismiss();
                 redirectTo(CodesUtil.EMPLOYEE_CLASS);
                 break;
             default:
-                progressDialog.dismiss();
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Toast.makeText(getActivity(),"There was a problem with extracting your role. Please contact the admins!", Toast.LENGTH_LONG).show();
                     }
                 });
+
+                break;
         }
     }
 }

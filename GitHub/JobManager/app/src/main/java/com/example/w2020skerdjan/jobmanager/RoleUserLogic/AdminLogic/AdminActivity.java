@@ -8,9 +8,15 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 
+import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.Member;
 import com.example.w2020skerdjan.jobmanager.R;
+import com.example.w2020skerdjan.jobmanager.Retrofit.Requests.RequestsAPI;
+import com.example.w2020skerdjan.jobmanager.Retrofit.RetrofitClient;
+import com.example.w2020skerdjan.jobmanager.Utils.CodesUtil;
+import com.example.w2020skerdjan.jobmanager.Utils.MySharedPref;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -22,19 +28,77 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 public class AdminActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
     private Drawer result;
+    private Toolbar toolbar;
     private FragmentTransaction fragmentTransaction;
     private FragmentManager fragmentManager;
+    private Member loggedMember;
+    private RetrofitClient retrofitClient;
+    private Retrofit retrofit;
+    private RequestsAPI requestsAPI;
+    private MySharedPref mySharedPref;
+    private String memberEmail;
+    private  AccountHeader headerResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
+        setupRetrofit();
         setupViews();
         initAdminHomeFragment();
+        getLoggedInMember();
+    }
+
+    private void getLoggedInMember() {
+        memberEmail = mySharedPref.getStringFromSharedPref(CodesUtil.USERNAME);
+        if (memberEmail != null)
+            requestsAPI.getAspNetUserIdByEmail(memberEmail).enqueue(getMemberFromEmail);
+    }
+
+    Callback<Member> getMemberFromEmail = new Callback<Member>() {
+        @Override
+        public void onResponse(Call<Member> call, Response<Member> response) {
+            if (response.isSuccessful()) {
+                loggedMember = response.body();
+                headerResult.addProfiles(new ProfileDrawerItem().withName(loggedMember.getFirstName()+""+loggedMember.getLastName()).withEmail(loggedMember.getEmail()).withIcon(getResources().getDrawable(R.drawable.ic_icon_profile)));
+            } else {
+                try {
+                    Log.d("Login", "getAspnNetuserId failed : " + response.message() + response.errorBody().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        @Override
+        public void onFailure(Call<Member> call, Throwable t) {
+            String message = "";
+            Toast.makeText(AdminActivity.this, "Login failed: Network Error!", Toast.LENGTH_SHORT).show();
+            if(t!=null && t.getMessage()!=null){
+                message = t.getMessage();
+            }
+            Log.d("Login", "OnFailure : " + message);
+        }
+    };
+
+
+
+
+    private void setupRetrofit(){
+        retrofitClient = new RetrofitClient();
+        retrofit = retrofitClient.krijoRetrofit();
+        requestsAPI = retrofit.create(RequestsAPI.class);
+        mySharedPref = new MySharedPref(this);
     }
 
 
@@ -60,13 +124,10 @@ public class AdminActivity extends AppCompatActivity {
 
 
 
-        AccountHeader headerResult = new AccountHeaderBuilder()
+       headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withTranslucentStatusBar(true)
                 .withHeaderBackground(R.drawable.nav_header)
-                .addProfiles(
-                        new ProfileDrawerItem().withName("Admin Admin").withEmail("admin@w2020.com").withIcon(getResources().getDrawable(R.drawable.ic_icon_profile))
-                )
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
                     public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
