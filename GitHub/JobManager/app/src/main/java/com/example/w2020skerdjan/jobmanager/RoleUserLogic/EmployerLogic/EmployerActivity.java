@@ -19,6 +19,7 @@ import com.example.w2020skerdjan.jobmanager.Retrofit.RetrofitClient;
 import com.example.w2020skerdjan.jobmanager.RoleUserLogic.AdminLogic.AdminActivity;
 import com.example.w2020skerdjan.jobmanager.Utils.CodesUtil;
 import com.example.w2020skerdjan.jobmanager.Utils.MySharedPref;
+import com.github.clans.fab.FloatingActionButton;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -49,7 +50,8 @@ public class EmployerActivity extends AppCompatActivity {
     private RequestsAPI requestsAPI;
     private MySharedPref mySharedPref;
     private String memberEmail;
-    private  AccountHeader headerResult;
+    private AccountHeader headerResult;
+    private FloatingActionButton addNewJob, addNewManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,16 +60,26 @@ public class EmployerActivity extends AppCompatActivity {
         setupViews();
         setupRetrofit();
         getLoggedInMember();
+
        // initAdminHomeFragment();
 
     }
 
     private void setupViews(){
         toolbar = findViewById(R.id.toolbar);
+        addNewJob = findViewById(R.id.addJob);
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.md_white_1000));
         toolbar.setTitle("Home");
         setTitle("Home");
+        addNewJob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EmployerActivity.this, AddNewJobActivity.class);
+                startActivity(intent);
+            }
+        });
+
         setupNavigationDrawer();
         initHomeFragment();
 

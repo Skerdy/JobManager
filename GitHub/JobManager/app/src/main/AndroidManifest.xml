@@ -56,16 +56,12 @@
         <activity
             android:name=".RoleUserLogic.EmployerLogic.EmployerMap"
             android:label="@string/title_activity_employer_map"
-            android:theme="@style/AppTheme.NoActionBar" >
-
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".RoleUserLogic.EmployerLogic.EmployerProfile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RoleUserLogic.EmployeeLogic.EmployeeActivity">
-
-        </activity>
+        <activity android:name=".RoleUserLogic.EmployeeLogic.EmployeeActivity"></activity>
+        <activity android:name=".RoleUserLogic.EmployerLogic.AddNewJobActivity"></activity>
     </application>
 
 </manifest>

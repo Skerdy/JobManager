@@ -189,6 +189,7 @@ public class LoginFragment extends Fragment {
             if(response.isSuccessful()){
                 progressDialog.dismiss();
                 ASPNETUSERID = response.body().getAspNetUserID();
+                mySharedPref.saveStringInSharedPref(CodesUtil.ASP_NET_USER_ID, ASPNETUSERID);
                 Thread thread = new Thread(new Runnable(){
 
                     @Override

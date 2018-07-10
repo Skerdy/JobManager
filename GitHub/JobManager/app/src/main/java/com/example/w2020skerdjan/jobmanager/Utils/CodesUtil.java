@@ -25,4 +25,5 @@ public class CodesUtil {
     public static final String FROM_JOB_CLICK = "from_job_click";
 
     public static final Class EMPLOYEE_CLASS = EmployeeActivity.class;
+    public static final String ASP_NET_USER_ID = "asp_net_user_id_job_finder";
 }

@@ -49,7 +49,7 @@
         fab:menu_labels_singleLine="true">
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/kalendar_javor"
+            android:id="@+id/addJob"
             style="@style/MenuButtonsSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/kalendar_ditor"
+            android:id="@+id/addManager"
             style="@style/MenuButtonsSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

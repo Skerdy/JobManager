@@ -1,17 +1,21 @@
 package com.example.w2020skerdjan.jobmanager.Retrofit.Requests;
 
+import com.example.w2020skerdjan.jobmanager.Models.Custom.NewJobBody;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.Address;
+import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.EducationResponse;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.EmployeeMap;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.Job;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.JobType;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.LoginResponse;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.Member;
+import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.ProfessionResponse;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.RegisterResponseSuccess;
 
 import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -72,6 +76,21 @@ public interface RequestsAPI {
     @FormUrlEncoded
     @GET("roles/get")
     Call<Member> getUserRoleByAspNetUserId(@Query("aspnetuserid") String aspNetUserId);
+
+
+    @Headers({"Content-Type:application/json"})
+    @POST("jobs/addjob")
+    Call<Void> postNewJob(@Query("aspnetuserid") String AspId, @Body NewJobBody newJobBody);
+
+
+    @Headers({"Content-Type:application/json"})
+    @GET("education/all")
+    Call<List<EducationResponse>> getAllEducations();
+
+    @Headers({"Content-Type:application/json"})
+    @GET("professions/all")
+    Call<List<ProfessionResponse>> getAllProfessions();
+
 
 
 }
