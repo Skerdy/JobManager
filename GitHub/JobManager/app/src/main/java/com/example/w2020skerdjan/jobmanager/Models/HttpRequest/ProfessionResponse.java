@@ -3,7 +3,7 @@ package com.example.w2020skerdjan.jobmanager.Models.HttpRequest;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ProfessionResponse {
+public class ProfessionResponse extends Object{
 
     @SerializedName("id")
     @Expose

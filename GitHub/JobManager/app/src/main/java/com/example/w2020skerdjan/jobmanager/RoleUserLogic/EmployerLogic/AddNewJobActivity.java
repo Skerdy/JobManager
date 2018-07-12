@@ -1,14 +1,18 @@
 package com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployerLogic;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.w2020skerdjan.jobmanager.Models.Custom.NewJobBody;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.EducationResponse;
@@ -18,11 +22,13 @@ import com.example.w2020skerdjan.jobmanager.Retrofit.Requests.RequestsAPI;
 import com.example.w2020skerdjan.jobmanager.Retrofit.RetrofitClient;
 import com.example.w2020skerdjan.jobmanager.Utils.CodesUtil;
 import com.example.w2020skerdjan.jobmanager.Utils.MySharedPref;
+import com.example.w2020skerdjan.jobmanager.Utils.Utils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import org.angmarch.views.NiceSpinner;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -47,6 +53,10 @@ public class AddNewJobActivity extends AppCompatActivity implements TimePickerDi
     private MySharedPref mySharedPref;
     private List<ProfessionResponse> professions;
     private List<EducationResponse> educations;
+    private List<Object> objects;
+    private android.support.v7.widget.Toolbar toolbar;
+    private ProgressDialog progressDialog;
+
 
 
 
@@ -57,6 +67,18 @@ public class AddNewJobActivity extends AppCompatActivity implements TimePickerDi
         setupViews();
         setupRetrofit();
         fillSpinnersWithData();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d("EmployerMap", "Pressed back navigation button");
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
+        }
+        return true;
     }
 
     private void fillSpinnersWithData(){
@@ -72,7 +94,7 @@ public class AddNewJobActivity extends AppCompatActivity implements TimePickerDi
         public void onResponse(Call<List<ProfessionResponse>> call, Response<List<ProfessionResponse>> response) {
             if(response.isSuccessful()){
                 professions = response.body();
-                job_profession.attachDataSource(professions);
+                job_profession.attachDataSource(Utils.getListOfStringsFromResponse(getObjectsProfesion(professions)));
             }
             else{
 
@@ -91,7 +113,7 @@ public class AddNewJobActivity extends AppCompatActivity implements TimePickerDi
         public void onResponse(Call<List<EducationResponse>> call, Response<List<EducationResponse>> response) {
             if(response.isSuccessful()){
                 educations = response.body();
-                job_education.attachDataSource(educations);
+                job_education.attachDataSource(Utils.getListOfStringsFromResponse(getObjectsEducation(educations)));
             }
             else{
 
@@ -107,22 +129,29 @@ public class AddNewJobActivity extends AppCompatActivity implements TimePickerDi
 
 
 
+
+
     Callback<Void> postNewJobCallBack = new Callback<Void>() {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
             if (response.isSuccessful()){
                 Log.d("NewJob", "New Job u ruajt me sukses");
-                onBackPressed();
+                progressDialog.dismiss();
+                Toast.makeText(AddNewJobActivity.this, "Job saved with success", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(AddNewJobActivity.this, EmployerActivity.class);
+                startActivity(intent);
                 finish();
             }
             else{
-
+                Log.d("NewJob", "New Job no success");
+                progressDialog.dismiss();
             }
         }
 
         @Override
         public void onFailure(Call<Void> call, Throwable t) {
-
+            Log.d("NewJob", "Failed");
+            progressDialog.dismiss();
         }
     };
 
@@ -137,7 +166,11 @@ public class AddNewJobActivity extends AppCompatActivity implements TimePickerDi
 
 
     private void  setupViews(){
-        jobTitle = findViewById(R.id.input_job_title);
+        progressDialog= new ProgressDialog(this,
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Creating new Job!");
+       // jobTitle = findViewById(R.id.input_job_title);
         jobDescription = findViewById(R.id.input_job_description);
         jobExperienceYears = findViewById(R.id.input_job_ezperience);
         jobMinSalary = findViewById(R.id.input_min_salary);
@@ -148,6 +181,9 @@ public class AddNewJobActivity extends AppCompatActivity implements TimePickerDi
         calendarEndCardView = findViewById(R.id.calendar_end_cv);
         startDate = findViewById(R.id.startDateTxt);
         endDate = findViewById(R.id.endDateTxt);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Calendar now = Calendar.getInstance();
         final DatePickerDialog dpd = DatePickerDialog.newInstance(
@@ -175,6 +211,7 @@ public class AddNewJobActivity extends AppCompatActivity implements TimePickerDi
         saveJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialog.show();
                 if(validate()){
                     requestsAPI.postNewJob(mySharedPref.getStringFromSharedPref(CodesUtil.ASP_NET_USER_ID), new NewJobBody(
                             jobDescription.getText().toString(),
@@ -185,6 +222,9 @@ public class AddNewJobActivity extends AppCompatActivity implements TimePickerDi
                             returnIdFromProfessionName(job_profession.getText().toString()),
                             returnIdFromEducationName(job_education.getText().toString())
                     )).enqueue(postNewJobCallBack);
+                }
+                else{
+                    progressDialog.dismiss();
                 }
             }
         });
@@ -235,7 +275,7 @@ public class AddNewJobActivity extends AppCompatActivity implements TimePickerDi
 
         boolean valid = true;
 
-        titulli = jobTitle.getText().toString();
+       // titulli = jobTitle.getText().toString();
         pershkrimi = jobDescription.getText().toString();
         edukimi = job_education.getText().toString();
         profesioni = job_profession.getText().toString();
@@ -253,13 +293,13 @@ public class AddNewJobActivity extends AppCompatActivity implements TimePickerDi
             return  false;
         }
 
-
+/*
         if (titulli.isEmpty()) {
             jobTitle.setError("Please insert a Job Title!");
             valid = false;
         } else {
             jobTitle.setError(null);
-        }
+        }*/
 
         if (edukimi.isEmpty()) {
             job_education.setError("Please pick a valid education!");
@@ -291,5 +331,20 @@ public class AddNewJobActivity extends AppCompatActivity implements TimePickerDi
         }
 
         return valid;
+    }
+
+    private List<Object> getObjectsProfesion(List<ProfessionResponse> professionResponses){
+        objects = new ArrayList<>();
+        for(ProfessionResponse professionResponse : professionResponses){
+            objects.add(professionResponse);
+        }
+        return objects;
+    }
+    private List<Object> getObjectsEducation(List<EducationResponse> educationResponses){
+        objects = new ArrayList<>();
+        for(EducationResponse educationResponse : educationResponses){
+            objects.add(educationResponse);
+        }
+        return objects;
     }
 }

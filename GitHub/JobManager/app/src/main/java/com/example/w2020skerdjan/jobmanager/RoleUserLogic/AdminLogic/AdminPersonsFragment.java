@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -63,7 +64,7 @@ public class AdminPersonsFragment extends Fragment {
     private void setupAllViews(View view){
         recyclerView = view.findViewById(R.id.recyclerView);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2, GridLayoutManager.VERTICAL,false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false));
         setupSwipeToRefresh();
     }
 
@@ -73,6 +74,7 @@ public class AdminPersonsFragment extends Fragment {
     }
 
     Callback<List<Member>> getAllMembersCallback = new Callback<List<Member>>() {
+
         @Override
         public void onResponse(Call<List<Member>> call, Response<List<Member>> response) {
             if(response.isSuccessful()){

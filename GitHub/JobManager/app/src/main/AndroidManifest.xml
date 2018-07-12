@@ -61,7 +61,9 @@
             android:name=".RoleUserLogic.EmployerLogic.EmployerProfile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RoleUserLogic.EmployeeLogic.EmployeeActivity"></activity>
-        <activity android:name=".RoleUserLogic.EmployerLogic.AddNewJobActivity"></activity>
+        <activity android:name=".RoleUserLogic.EmployerLogic.AddNewJobActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="Add New Job"></activity>
     </application>
 
 </manifest>
