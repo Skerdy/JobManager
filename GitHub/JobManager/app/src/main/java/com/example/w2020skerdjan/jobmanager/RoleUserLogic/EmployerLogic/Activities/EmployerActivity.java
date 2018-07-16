@@ -1,4 +1,4 @@
-package com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployerLogic;
+package com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployerLogic.Activities;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -11,12 +11,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.w2020skerdjan.jobmanager.Fragment.LoginFragment;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.Member;
 import com.example.w2020skerdjan.jobmanager.R;
 import com.example.w2020skerdjan.jobmanager.Retrofit.Requests.RequestsAPI;
 import com.example.w2020skerdjan.jobmanager.Retrofit.RetrofitClient;
-import com.example.w2020skerdjan.jobmanager.RoleUserLogic.AdminLogic.AdminActivity;
+import com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployerLogic.Fragments.EmployeeSearchJobsFragment;
+import com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployerLogic.Fragments.EmployerHomeFragment;
 import com.example.w2020skerdjan.jobmanager.Utils.CodesUtil;
 import com.example.w2020skerdjan.jobmanager.Utils.MySharedPref;
 import com.github.clans.fab.FloatingActionButton;

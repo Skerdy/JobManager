@@ -38,4 +38,19 @@ public class Utils {
         }
         return result;
     }
+
+    public static List<Object> getObjectsProfesion(List<ProfessionResponse> professionResponses){
+        List<Object> objects = new ArrayList<>();
+        for(ProfessionResponse professionResponse : professionResponses){
+            objects.add(professionResponse);
+        }
+        return objects;
+    }
+    public static List<Object> getObjectsEducation(List<EducationResponse> educationResponses){
+        List<Object> objects = new ArrayList<>();
+        for(EducationResponse educationResponse : educationResponses){
+            objects.add(educationResponse);
+        }
+        return objects;
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployerLogic;
+package com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployerLogic.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

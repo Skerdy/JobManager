@@ -1,4 +1,4 @@
-package com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployerLogic;
+package com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployerLogic.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.w2020skerdjan.jobmanager.R;
+import com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployerLogic.Activities.EmployerActivity;
 
 public class EmployerHomeFragment extends Fragment {
 

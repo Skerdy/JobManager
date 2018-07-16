@@ -33,11 +33,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RoleUserLogic.EmployerLogic.EmployerActivity"
+            android:name=".RoleUserLogic.EmployerLogic.Activities.EmployerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".RoleUserLogic.AdminLogic.AdminActivity"
+            android:name=".RoleUserLogic.AdminLogic.Activities.AdminActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RoleUserLogic.ManagerLogic.ManagerActivity" />
@@ -54,16 +54,19 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".RoleUserLogic.EmployerLogic.EmployerMap"
+            android:name=".RoleUserLogic.EmployerLogic.Activities.EmployerMap"
             android:label="@string/title_activity_employer_map"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".RoleUserLogic.EmployerLogic.EmployerProfile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RoleUserLogic.EmployeeLogic.EmployeeActivity"></activity>
-        <activity android:name=".RoleUserLogic.EmployerLogic.AddNewJobActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="Add New Job"></activity>
+        <activity
+            android:name=".RoleUserLogic.EmployerLogic.Activities.EmployerProfile"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".RoleUserLogic.EmployeeLogic.EmployeeActivity" />
+        <activity
+            android:name=".RoleUserLogic.EmployerLogic.Activities.AddNewJobActivity"
+            android:label="Add New Job"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".RoleUserLogic.EmployerLogic.Activities.EmployerTutorialActivity"
+            android:theme="@style/AppTheme.Dark"></activity>
     </application>
 
 </manifest>

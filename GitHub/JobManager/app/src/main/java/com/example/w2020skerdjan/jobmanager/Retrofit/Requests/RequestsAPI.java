@@ -92,5 +92,9 @@ public interface RequestsAPI {
     Call<List<ProfessionResponse>> getAllProfessions();
 
 
+    @Headers({"Content-Type:application/json"})
+    @POST("member/updatemember")
+    Call<Member> updateMemberWithId(@Query("memberid") Integer memberId, @Body Member member);
+
 
 }

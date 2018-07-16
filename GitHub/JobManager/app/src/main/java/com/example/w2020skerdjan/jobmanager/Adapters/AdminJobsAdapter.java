@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.Job;
 import com.example.w2020skerdjan.jobmanager.R;
-import com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployerLogic.EmployerMap;
+import com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployerLogic.Activities.EmployerMap;
 import com.example.w2020skerdjan.jobmanager.Utils.CodesUtil;
 import com.github.florent37.expansionpanel.ExpansionLayout;
 import com.github.florent37.expansionpanel.viewgroup.ExpansionLayoutCollection;

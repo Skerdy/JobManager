@@ -1,4 +1,4 @@
-package com.example.w2020skerdjan.jobmanager.RoleUserLogic.AdminLogic;
+package com.example.w2020skerdjan.jobmanager.RoleUserLogic.AdminLogic.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

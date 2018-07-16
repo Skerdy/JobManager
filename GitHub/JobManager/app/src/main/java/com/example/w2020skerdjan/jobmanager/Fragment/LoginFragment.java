@@ -52,6 +52,7 @@ public class LoginFragment extends Fragment {
     private String emailStr = null , passwordStr = null;
     private ProgressDialog progressDialog;
     private String ASPNETUSERID = null;
+    private boolean eligibleForTutorial = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,9 +61,6 @@ public class LoginFragment extends Fragment {
         retrofit = retrofitClient.krijoRetrofit();
         requestsAPI = retrofit.create(RequestsAPI.class);
         mySharedPref = new MySharedPref(getActivity());
-
-
-
     }
 
     @Nullable
@@ -187,6 +185,14 @@ public class LoginFragment extends Fragment {
         @Override
         public void onResponse(Call<Member> call, Response<Member> response) {
             if(response.isSuccessful()){
+                Log.d("Skerdi", "name:" + response.body().getFirstName());
+                if(response.body().getFirstName().equals("PLeaseupdate")){
+                    eligibleForTutorial = true;
+                }
+                else {
+                    Log.d("Skerdi", "false");
+                    eligibleForTutorial = false;
+                }
                 progressDialog.dismiss();
                 ASPNETUSERID = response.body().getAspNetUserID();
                 mySharedPref.saveStringInSharedPref(CodesUtil.ASP_NET_USER_ID, ASPNETUSERID);
@@ -289,15 +295,31 @@ public class LoginFragment extends Fragment {
 
         switch (content.toString().replace("\"","")){
             case CodesUtil.ADMINISTRATOR_ROLE:
+                if(eligibleForTutorial){
+                    redirectTo(CodesUtil.ADMIN_CLASS);
+                }
+                else
                 redirectTo(CodesUtil.ADMIN_CLASS);
                 break;
             case CodesUtil.MANAGER_ROLE:
+                if(eligibleForTutorial){
+                    redirectTo(CodesUtil.MANAGER_CLASS);
+                }
+                else
                 redirectTo(CodesUtil.MANAGER_CLASS);
                 break;
             case CodesUtil.EMPLOYER_ROLE:
+                if(eligibleForTutorial){
+                redirectTo(CodesUtil.TUTORIAL_EMPLOYER_CLASS);
+                }
+                else
                 redirectTo(CodesUtil.EMPLOYER_CLASS);
                 break;
             case CodesUtil.EMPLOYEE_ROLE:
+                if(eligibleForTutorial){
+                    redirectTo(CodesUtil.EMPLOYEE_CLASS);
+                }
+                else
                 redirectTo(CodesUtil.EMPLOYEE_CLASS);
                 break;
             default:

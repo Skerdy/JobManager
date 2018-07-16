@@ -1,4 +1,4 @@
-package com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployerLogic;
+package com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployerLogic.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.w2020skerdjan.jobmanager.Models.Custom.NewJobBody;
 import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.EducationResponse;

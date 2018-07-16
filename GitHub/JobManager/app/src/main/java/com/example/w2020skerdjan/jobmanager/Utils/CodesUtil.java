@@ -1,9 +1,10 @@
 package com.example.w2020skerdjan.jobmanager.Utils;
 
 import com.example.w2020skerdjan.jobmanager.Fragment.LoginFragment;
-import com.example.w2020skerdjan.jobmanager.RoleUserLogic.AdminLogic.AdminActivity;
+import com.example.w2020skerdjan.jobmanager.RoleUserLogic.AdminLogic.Activities.AdminActivity;
 import com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployeeLogic.EmployeeActivity;
-import com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployerLogic.EmployerActivity;
+import com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployerLogic.Activities.EmployerActivity;
+import com.example.w2020skerdjan.jobmanager.RoleUserLogic.EmployerLogic.Activities.EmployerTutorialActivity;
 import com.example.w2020skerdjan.jobmanager.RoleUserLogic.ManagerLogic.ManagerActivity;
 
 public class CodesUtil {
@@ -26,4 +27,5 @@ public class CodesUtil {
 
     public static final Class EMPLOYEE_CLASS = EmployeeActivity.class;
     public static final String ASP_NET_USER_ID = "asp_net_user_id_job_finder";
+    public static final Class TUTORIAL_EMPLOYER_CLASS = EmployerTutorialActivity.class;
 }

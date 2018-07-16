@@ -1,4 +1,4 @@
-package com.example.w2020skerdjan.jobmanager.RoleUserLogic.AdminLogic;
+package com.example.w2020skerdjan.jobmanager.RoleUserLogic.AdminLogic.Activities;
 
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +15,9 @@ import com.example.w2020skerdjan.jobmanager.Models.HttpRequest.Member;
 import com.example.w2020skerdjan.jobmanager.R;
 import com.example.w2020skerdjan.jobmanager.Retrofit.Requests.RequestsAPI;
 import com.example.w2020skerdjan.jobmanager.Retrofit.RetrofitClient;
+import com.example.w2020skerdjan.jobmanager.RoleUserLogic.AdminLogic.Fragments.AdminHomeFragment;
+import com.example.w2020skerdjan.jobmanager.RoleUserLogic.AdminLogic.Fragments.AdminJobsFragment;
+import com.example.w2020skerdjan.jobmanager.RoleUserLogic.AdminLogic.Fragments.AdminPersonsFragment;
 import com.example.w2020skerdjan.jobmanager.Utils.CodesUtil;
 import com.example.w2020skerdjan.jobmanager.Utils.MySharedPref;
 import com.mikepenz.materialdrawer.AccountHeader;

@@ -3,4 +3,5 @@
     <string name="addJob">Add new Job</string>
     <string name="addManager">Add Manager</string>
     <string name="title_activity_employer_map">Find Employees</string>
+    <string name="phone_hint">mobile</string>
 </resources>
