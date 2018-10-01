@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/bigPanel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/background">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="55dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="10dp">
+
+            <EditText
+                android:id="@+id/input_email"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:textSize="15sp"
+                android:hint="Email"
+                android:layout_margin="5dp"
+                android:paddingLeft="10dp"
+                android:background="@drawable/rounded_corner_edit_text"
+                android:textColor="#000000" />
+
+            <EditText
+                android:id="@+id/input_password"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:textSize="15sp"
+                android:textColor="#000000"
+                android:layout_margin="5dp"
+                android:hint="Password"
+                android:paddingLeft="10dp"
+                android:inputType="textPassword"
+                android:background="@drawable/rounded_corner_edit_text" />
+
+            <EditText
+                android:id="@+id/input_confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:hint="Confirm Password"
+                android:layout_margin="5dp"
+                android:textSize="15sp"
+                android:paddingLeft="10dp"
+                android:inputType="textPassword"
+                android:background="@drawable/rounded_corner_edit_text"
+                android:textColor="#000000" />
+
+            <org.angmarch.views.NiceSpinner
+                android:id="@+id/nice_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:text="Pick your role!"
+                android:layout_marginTop="10dp"
+                android:layout_margin="5dp"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/registerTrigger"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#49A010">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="REGISTER"
+            android:textColor="#fff"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textSize="22sp"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

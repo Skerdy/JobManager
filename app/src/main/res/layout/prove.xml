@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="2dp"
+        android:layout_margin="3dp"
+        app:cardBackgroundColor="#fff3f3f3">
+
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="4dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="5dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" "
+                    android:drawableLeft="@drawable/ic_icon_job_member_notes"
+                    android:textSize="13sp"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/memberNotes"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="7dp"
+
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="sdfsdfsdfs"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="5dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="13sp"
+                    android:drawableLeft="@drawable/ic_icon_job_member_birthday"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_marginLeft="7dp"
+                    android:id="@+id/memberBirthday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="12"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="5dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="13sp"
+                    android:drawableLeft="@drawable/ic_icon_job_member_mobile"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/memberMobile"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:textSize="12sp"
+                    android:layout_height="wrap_content"
+                    android:text="+355 696345"/>
+            </LinearLayout>
+
+      <!--      <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="5dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  Salary :  "
+                    android:textSize="13sp"
+                    android:drawableLeft="@drawable/ic_icon_cash"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/salaryJob"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="1500$"/>
+            </LinearLayout>-->
+
+
+
+        </LinearLayout>
+
+        <!-- CONTENT -->
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="56dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_icon_job_experience"
+            android:layout_marginBottom="30dp"
+            android:layout_gravity="center_horizontal"/>
+
+
+
+        <!--  Email Label -->
+        <org.angmarch.views.NiceSpinner
+            android:id="@+id/spinner_profession"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="Profession"
+            app:backgroundSelector="@drawable/nice_spinner_selector"
+            android:textColor="@color/md_white_1000"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            />
+
+
+        <!-- Password Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+
+            <EditText android:id="@+id/input_experience_years"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="Experience Years"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <TextView
+            android:layout_marginTop="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            android:text="Make sure you insert the data above, then continue!"/>
+    </LinearLayout>
+
+
+
+</RelativeLayout>

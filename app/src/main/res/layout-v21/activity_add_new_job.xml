@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RoleUserLogic.EmployerLogic.Activities.AddNewJobActivity"
+    android:weightSum="10"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:textAlignment="center"
+            app:titleTextColor="@color/md_white_1000"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="7"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="4dp"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginRight="10dp">
+
+   <!--         <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+               >
+                <EditText android:id="@+id/input_job_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="15sp"
+                    android:padding="10dp"
+                    android:inputType="text"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="Job Title" />
+            </android.support.design.widget.TextInputLayout>-->
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp">
+                <EditText android:id="@+id/input_job_description"
+                    android:layout_width="match_parent"
+                    android:background="@drawable/edit_text_background"
+                    android:padding="10dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="15sp"
+                    android:inputType="text"
+                    android:hint="Job Description" />
+            </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:weightSum="2">
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1">
+                <EditText android:id="@+id/input_job_ezperience"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:background="@drawable/corner_edit_text"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textSize="14sp"
+                    android:hint="Exp years" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <EditText android:id="@+id/input_min_salary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:background="@drawable/corner_edit_text"
+                    android:inputType="number"
+                    android:textSize="14sp"
+                    android:hint="Minimum Salary" />
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+            <org.angmarch.views.NiceSpinner
+                android:id="@+id/education_id_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:text="Pick Education required"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                app:backgroundSelector="@drawable/edit_text_selector"
+                android:textColor="#000"
+                android:layout_marginTop="40dp"
+                />
+
+            <org.angmarch.views.NiceSpinner
+                android:id="@+id/profession_id_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:text="Pick Profession type"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                app:backgroundSelector="@drawable/edit_text_selector"
+                android:textColor="#000"
+                android:layout_marginTop="10dp"
+                />
+
+
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <android.support.v7.widget.CardView
+            android:id="@+id/calendar_start_cv"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+           android:layout_margin="10dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/startDateTxt"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawablePadding="5dp"
+                android:drawableLeft="@drawable/ic_icon_start_date_job"
+                android:text="Start Date"/>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/calendar_end_cv"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_margin="10dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/endDateTxt"
+                android:gravity="center_vertical"
+                android:layout_gravity="center"
+                android:drawablePadding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_icon_end_date_job"
+                android:text="End Date"/>
+
+        </android.support.v7.widget.CardView>
+
+</LinearLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1.5">
+    <Button
+        android:id="@+id/save_job_button"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_height="wrap_content"
+
+        android:text="Save New Job"
+        style="@style/Widget.AppCompat.Button.Colored"/>
+
+</RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="56dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="50dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_alignParentLeft="true"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_icon_mobile_number"
+                android:layout_marginBottom="30dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_icon_graduation"
+                android:layout_marginBottom="30dp" />
+        </RelativeLayout>
+
+
+
+
+        <!--  Email Label -->
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_marginBottom="20dp">
+
+           <com.lamudi.phonefield.PhoneInputLayout
+               android:id="@+id/phone_input_layout"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"/>
+
+       </LinearLayout>
+
+
+        <!-- Password Label -->
+        <org.angmarch.views.NiceSpinner
+            android:id="@+id/spinner_education"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="Education"
+            app:backgroundSelector="@drawable/nice_spinner_selector"
+            android:textColor="@color/md_white_1000"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:layout_marginTop="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            android:text="Make sure you insert the data above, then continue!"/>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
